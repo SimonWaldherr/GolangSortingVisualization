@@ -4,7 +4,7 @@ echo "INSERT A FRAMERATE [10]"
 read -t 10 FPS
 
 echo "INPUT A NAME OF A SORTING ALGORITHM"
-echo "[bubble]/gnome/selection"
+echo "[all]/bubble/comb/gnome/insertion/oddEven/selection"
 read -t 30 ALGO
 
 if [ "x$FPS" == "x" ]

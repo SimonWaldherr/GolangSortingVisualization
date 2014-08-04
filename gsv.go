@@ -63,6 +63,29 @@ func bubbleSort(arr []int) {
 	}
 }
 
+func combSort(arr []int) {
+	var gap int = len(arr)
+	var swapped bool = false
+	var i int
+	var tmp int
+
+	for gap > 1 || swapped == true {
+		swapped = false
+		if gap > 1 {
+			gap = int(float64(gap) / 1.3)
+		}
+		for i = 0; i < len(arr)-gap; i++ {
+			if arr[i] > arr[i+gap] {
+				tmp = arr[i]
+				arr[i] = arr[i+gap]
+				arr[i+gap] = tmp
+				swapped = true
+			}
+			visualize(arr)
+		}
+	}
+}
+
 func gnomeSort(arr []int) {
 	var i int = 1
 	var tmp int = 0
@@ -76,6 +99,50 @@ func gnomeSort(arr []int) {
 			arr[i-1] = tmp
 			if i > 1 {
 				i--
+			}
+		}
+		visualize(arr)
+	}
+}
+
+func insertionSort(arr []int) {
+	var tmp int
+	var i int
+	var j int
+
+	for i = 0; i < len(arr); i++ {
+		j = i
+		for j > 0 && arr[j-1] > arr[j] {
+			tmp = arr[j]
+			arr[j] = arr[j-1]
+			arr[j-1] = tmp
+			j = j - 1
+		}
+		visualize(arr)
+	}
+}
+
+func oddEvenSort(arr []int) {
+	var sorted bool = false
+	var i int
+	var tmp int
+
+	for !sorted {
+		sorted = true
+		for i = 1; i < len(arr) - 1; i += 2 {
+			if arr[i] > arr[i + 1] {
+				tmp = arr[i];
+				arr[i] = arr[i + 1]
+				arr[i + 1] = tmp
+				sorted = false
+			}
+		}
+		for i = 0; i < len(arr) - 1; i += 2 {
+			if arr[i] > arr[i + 1] {
+				tmp = arr[i];
+				arr[i] = arr[i + 1]
+				arr[i + 1] = tmp
+				sorted = false
 			}
 		}
 		visualize(arr)
@@ -104,7 +171,7 @@ func selectionSort(arr []int) {
 
 func main() {
 	var algo string
-	flag.StringVar(&algo, "algo", "bubble", "Select sorting algorithm [bubble]/gnome/selection")
+	flag.StringVar(&algo, "algo", "bubble", "Select sorting algorithm [all]/bubble/comb/gnome/insertion/oddEven/selection")
 	flag.IntVar(&fps, "fps", 10, "frames per second")
 	flag.IntVar(&max, "max", 9, "highest value")
 	flag.IntVar(&count, "count", 30, "number of values")
@@ -115,9 +182,28 @@ func main() {
 	switch algo {
 	case "bubble":
 		bubbleSort(arr)
+	case "comb":
+		combSort(arr)
 	case "gnome":
 		gnomeSort(arr)
+	case "insertion":
+		insertionSort(arr)
+	case "oddEven":
+		oddEvenSort(arr)
 	case "selection":
+		selectionSort(arr)
+	case "all":
+		arr = randomArray(count, max)
+		bubbleSort(arr)
+		arr = randomArray(count, max)
+		combSort(arr)
+		arr = randomArray(count, max)
+		gnomeSort(arr)
+		arr = randomArray(count, max)
+		insertionSort(arr)
+		arr = randomArray(count, max)
+		oddEvenSort(arr)
+		arr = randomArray(count, max)
 		selectionSort(arr)
 	}
 }
