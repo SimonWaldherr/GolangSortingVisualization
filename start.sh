@@ -14,7 +14,7 @@ fi
 
 if [ "x$ALGO" == "x" ]
   then
-  ALGO="bubble"
+  ALGO="all"
 fi
 
 go run gsv.go -count=$(tput cols) -max=$(tput lines) -fps=$FPS -algo=$ALGO

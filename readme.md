@@ -32,6 +32,16 @@
 ./start.sh
 ```
 
+```sh
+$ go run gsv.go --help
+Usage of gsv:
+  -algo="bubble": Select sorting algorithm all/[bubble]/comb/gnome/insertion/oddEven/selection
+  -count=30: number of values
+  -fps=10: frames per second
+  -max=9: highest value
+  -mode=1: visualization mode
+```
+
 ##License
 
 MIT

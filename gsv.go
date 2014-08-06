@@ -11,6 +11,7 @@ import (
 var max int
 var fps int
 var count int
+var mode int
 
 func randomArray(n int, max int) []int {
 	var i int
@@ -33,7 +34,11 @@ func visualize(arr []int) {
 
 	for y = 0; y < max; y++ {
 		for x = 0; x < count; x++ {
-			if arr[x] < y {
+			if arr[x] == y {
+				buffer.WriteByte(byte('#'))
+			} else if arr[x] < y && mode == 1 {
+				buffer.WriteByte(byte('#'))
+			} else if arr[x] > y && mode == 2 {
 				buffer.WriteByte(byte('#'))
 			} else {
 				buffer.WriteByte(byte(' '))
@@ -171,10 +176,11 @@ func selectionSort(arr []int) {
 
 func main() {
 	var algo string
-	flag.StringVar(&algo, "algo", "bubble", "Select sorting algorithm [all]/bubble/comb/gnome/insertion/oddEven/selection")
+	flag.StringVar(&algo, "algo", "bubble", "Select sorting algorithm all/[bubble]/comb/gnome/insertion/oddEven/selection")
 	flag.IntVar(&fps, "fps", 10, "frames per second")
 	flag.IntVar(&max, "max", 9, "highest value")
 	flag.IntVar(&count, "count", 30, "number of values")
+	flag.IntVar(&mode, "mode", 1, "visualization mode")
 	flag.Parse()
 	arr := randomArray(count, max)
 	fmt.Printf("sorting via %v-sort\nhighest value: %v\nnumber of values: %v\n\n", algo, max, count)
