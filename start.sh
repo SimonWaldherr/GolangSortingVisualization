@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo "INSERT A FRAMERATE [10]"
+echo "INSERT A FRAMERATE [30]"
 read -t 10 FPS
 
 echo "INPUT A NAME OF A SORTING ALGORITHM"
@@ -9,7 +9,7 @@ read -t 30 ALGO
 
 if [ "x$FPS" == "x" ]
   then
-  FPS=10
+  FPS=30
 fi
 
 if [ "x$ALGO" == "x" ]

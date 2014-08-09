@@ -63,6 +63,7 @@ func bubbleSort(arr []int) {
 				arr[j] = arr[j+1]
 				arr[j+1] = tmp
 			}
+			visualize(arr)
 		}
 		visualize(arr)
 	}
@@ -88,6 +89,7 @@ func combSort(arr []int) {
 			}
 			visualize(arr)
 		}
+		visualize(arr)
 	}
 }
 
@@ -122,6 +124,7 @@ func insertionSort(arr []int) {
 			arr[j] = arr[j-1]
 			arr[j-1] = tmp
 			j = j - 1
+			visualize(arr)
 		}
 		visualize(arr)
 	}
@@ -141,6 +144,7 @@ func oddEvenSort(arr []int) {
 				arr[i + 1] = tmp
 				sorted = false
 			}
+			visualize(arr)
 		}
 		for i = 0; i < len(arr) - 1; i += 2 {
 			if arr[i] > arr[i + 1] {
@@ -149,6 +153,7 @@ func oddEvenSort(arr []int) {
 				arr[i + 1] = tmp
 				sorted = false
 			}
+			visualize(arr)
 		}
 		visualize(arr)
 	}
@@ -165,6 +170,7 @@ func selectionSort(arr []int) {
 		for j = i + 1; j < len(arr); j++ {
 			if arr[j] < arr[min] {
 				min = j
+				visualize(arr)
 			}
 		}
 		tmp = arr[i]
