@@ -5,6 +5,7 @@ import (
 	cryptoRand "crypto/rand"
 	"flag"
 	"fmt"
+	"math/rand"
 	"time"
 )
 
@@ -33,7 +34,7 @@ func visualize(arr []int) {
 	var y int
 
 	for y = 0; y < max; y++ {
-		for x = 0; x < count; x++ {
+		for x = 0; x < len(arr); x++ {
 			if arr[x] == y {
 				buffer.WriteByte(byte('#'))
 			} else if arr[x] < y && mode == 1 {
@@ -49,6 +50,31 @@ func visualize(arr []int) {
 	time.Sleep(time.Second / time.Duration(fps))
 	fmt.Print("\033[2J")
 	fmt.Print(buffer.String())
+}
+
+func shuffle(arr []int) []int {
+	for i := len(arr) - 1; i > 0; i-- {
+		if j := rand.Intn(i + 1); i != j {
+			arr[i], arr[j] = arr[j], arr[i]
+		}
+	}
+	return arr
+}
+
+func isSorted(arr []int) bool {
+	for i := len(arr); i > 1; i-- {
+		if arr[i-1] < arr[i-2] {
+			return false
+		}
+	}
+	return true
+}
+
+func bogoSort(arr []int) {
+	for isSorted(arr) == false {
+		arr = shuffle(arr)
+		visualize(arr)
+	}
 }
 
 func bubbleSort(arr []int) {
@@ -82,6 +108,21 @@ func combSort(arr []int) {
 				swapped = true
 			}
 			visualize(arr)
+		}
+		visualize(arr)
+	}
+}
+
+func countingSort(arr []int) {
+	count := make([]int, max+1)
+	for _, x := range arr {
+		count[x-0]++
+	}
+	z := 0
+	for i, c := range count {
+		for ; c > 0; c-- {
+			arr[z] = i
+			z++
 		}
 		visualize(arr)
 	}
@@ -124,16 +165,16 @@ func oddEvenSort(arr []int) {
 
 	for !sorted {
 		sorted = true
-		for i = 1; i < len(arr) - 1; i += 2 {
-			if arr[i] > arr[i + 1] {
-				arr[i], arr[i + 1] = arr[i + 1], arr[i]
+		for i = 1; i < len(arr)-1; i += 2 {
+			if arr[i] > arr[i+1] {
+				arr[i], arr[i+1] = arr[i+1], arr[i]
 				sorted = false
 			}
 			visualize(arr)
 		}
-		for i = 0; i < len(arr) - 1; i += 2 {
-			if arr[i] > arr[i + 1] {
-				arr[i], arr[i + 1] = arr[i + 1], arr[i]
+		for i = 0; i < len(arr)-1; i += 2 {
+			if arr[i] > arr[i+1] {
+				arr[i], arr[i+1] = arr[i+1], arr[i]
 				sorted = false
 			}
 			visualize(arr)
@@ -160,9 +201,28 @@ func selectionSort(arr []int) {
 	}
 }
 
+func sleepSort(arr []int) {
+	var j int
+	arr2 := make([]int, len(arr))
+	channel := make(chan int, 1)
+	visualize(arr)
+	for i := 0; i < len(arr); i++ {
+		go func(arr []int, i int) {
+			time.Sleep(time.Duration(arr[i]) * time.Second / 4)
+			channel <- arr[i]
+		}(arr, i)
+	}
+
+	for i := 0; i < len(arr); i++ {
+		arr2[j] = <-channel
+		j++
+		visualize(arr2)
+	}
+}
+
 func main() {
 	var algo string
-	flag.StringVar(&algo, "algo", "bubble", "Select sorting algorithm all/[bubble]/comb/gnome/insertion/oddEven/selection")
+	flag.StringVar(&algo, "algo", "bubble", "Select sorting algorithm all/bogo/[bubble]/comb/counting/gnome/insertion/oddEven/selection/sleep")
 	flag.IntVar(&fps, "fps", 10, "frames per second")
 	flag.IntVar(&max, "max", 9, "highest value")
 	flag.IntVar(&count, "count", 30, "number of values")
@@ -172,10 +232,14 @@ func main() {
 	fmt.Printf("sorting via %v-sort\nhighest value: %v\nnumber of values: %v\n\n", algo, max, count)
 	time.Sleep(time.Second * 1)
 	switch algo {
+	case "bogo":
+		bogoSort(arr)
 	case "bubble":
 		bubbleSort(arr)
 	case "comb":
 		combSort(arr)
+	case "counting":
+		countingSort(arr)
 	case "gnome":
 		gnomeSort(arr)
 	case "insertion":
@@ -184,11 +248,17 @@ func main() {
 		oddEvenSort(arr)
 	case "selection":
 		selectionSort(arr)
+	case "sleep":
+		sleepSort(arr)
 	case "all":
+		arr = randomArray(count, max)
+		bogoSort(arr)
 		arr = randomArray(count, max)
 		bubbleSort(arr)
 		arr = randomArray(count, max)
 		combSort(arr)
+		arr = randomArray(count, max)
+		countingSort(arr)
 		arr = randomArray(count, max)
 		gnomeSort(arr)
 		arr = randomArray(count, max)
@@ -197,5 +267,7 @@ func main() {
 		oddEvenSort(arr)
 		arr = randomArray(count, max)
 		selectionSort(arr)
+		arr = randomArray(count, max)
+		sleepSort(arr)
 	}
 }
