@@ -52,16 +52,13 @@ func visualize(arr []int) {
 }
 
 func bubbleSort(arr []int) {
-	var tmp int = 0
 	var i int
 	var j int
 
 	for i = 0; i < len(arr); i++ {
 		for j = 0; j < len(arr)-1; j++ {
 			if arr[j] > arr[j+1] {
-				tmp = arr[j]
-				arr[j] = arr[j+1]
-				arr[j+1] = tmp
+				arr[j], arr[j+1] = arr[j+1], arr[j]
 			}
 			visualize(arr)
 		}
@@ -73,7 +70,6 @@ func combSort(arr []int) {
 	var gap int = len(arr)
 	var swapped bool = false
 	var i int
-	var tmp int
 
 	for gap > 1 || swapped == true {
 		swapped = false
@@ -82,9 +78,7 @@ func combSort(arr []int) {
 		}
 		for i = 0; i < len(arr)-gap; i++ {
 			if arr[i] > arr[i+gap] {
-				tmp = arr[i]
-				arr[i] = arr[i+gap]
-				arr[i+gap] = tmp
+				arr[i], arr[i+gap] = arr[i+gap], arr[i]
 				swapped = true
 			}
 			visualize(arr)
@@ -95,15 +89,12 @@ func combSort(arr []int) {
 
 func gnomeSort(arr []int) {
 	var i int = 1
-	var tmp int = 0
 
 	for i < len(arr) {
 		if arr[i] >= arr[i-1] {
 			i++
 		} else {
-			tmp = arr[i]
-			arr[i] = arr[i-1]
-			arr[i-1] = tmp
+			arr[i], arr[i-1] = arr[i-1], arr[i]
 			if i > 1 {
 				i--
 			}
@@ -113,16 +104,13 @@ func gnomeSort(arr []int) {
 }
 
 func insertionSort(arr []int) {
-	var tmp int
 	var i int
 	var j int
 
 	for i = 0; i < len(arr); i++ {
 		j = i
 		for j > 0 && arr[j-1] > arr[j] {
-			tmp = arr[j]
-			arr[j] = arr[j-1]
-			arr[j-1] = tmp
+			arr[j], arr[j-1] = arr[j-1], arr[j]
 			j = j - 1
 			visualize(arr)
 		}
@@ -133,24 +121,19 @@ func insertionSort(arr []int) {
 func oddEvenSort(arr []int) {
 	var sorted bool = false
 	var i int
-	var tmp int
 
 	for !sorted {
 		sorted = true
 		for i = 1; i < len(arr) - 1; i += 2 {
 			if arr[i] > arr[i + 1] {
-				tmp = arr[i];
-				arr[i] = arr[i + 1]
-				arr[i + 1] = tmp
+				arr[i], arr[i + 1] = arr[i + 1], arr[i]
 				sorted = false
 			}
 			visualize(arr)
 		}
 		for i = 0; i < len(arr) - 1; i += 2 {
 			if arr[i] > arr[i + 1] {
-				tmp = arr[i];
-				arr[i] = arr[i + 1]
-				arr[i + 1] = tmp
+				arr[i], arr[i + 1] = arr[i + 1], arr[i]
 				sorted = false
 			}
 			visualize(arr)
@@ -161,7 +144,6 @@ func oddEvenSort(arr []int) {
 
 func selectionSort(arr []int) {
 	var min int = 0
-	var tmp int = 0
 	var i int
 	var j int
 
@@ -173,9 +155,7 @@ func selectionSort(arr []int) {
 				visualize(arr)
 			}
 		}
-		tmp = arr[i]
-		arr[i] = arr[min]
-		arr[min] = tmp
+		arr[i], arr[min] = arr[min], arr[i]
 		visualize(arr)
 	}
 }
