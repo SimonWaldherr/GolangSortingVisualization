@@ -5,7 +5,11 @@ import (
 	cryptoRand "crypto/rand"
 	"flag"
 	"fmt"
+	"image"
+	"image/color"
+	"image/gif"
 	"math/rand"
+	"os"
 	"time"
 )
 
@@ -13,6 +17,44 @@ var max int
 var fps int
 var count int
 var mode int
+
+func buildImage(arr []int) *image.Paletted {
+	var frame = image.NewPaletted(
+		image.Rectangle{
+			image.Point{0, 0},
+			image.Point{len(arr), max},
+		},
+		color.Palette{
+			color.Gray{uint8(255)},
+			color.Gray{uint8(0)},
+		},
+	)
+	fmt.Println(arr)
+	for k, v := range arr {
+		frame.SetColorIndex(k, v, uint8(1))
+	}
+	return frame
+}
+
+func writeGif(name string, g *gif.GIF) {
+	fmt.Println("size of g == ", len(g.Image))
+	w, err := os.Create(name + ".gif")
+	if err != nil {
+		fmt.Println(err)
+		panic(err)
+	}
+	defer func() {
+		if err := w.Close(); err != nil {
+			fmt.Println(err)
+			panic(err)
+		}
+	}()
+	err = gif.EncodeAll(w, g)
+	if err != nil {
+		fmt.Println(err)
+		panic(err)
+	}
+}
 
 func randomArray(n int, max int) []int {
 	var i int
@@ -71,13 +113,22 @@ func isSorted(arr []int) bool {
 }
 
 func bogoSort(arr []int) {
+	g := &gif.GIF{
+		LoopCount: 1,
+	}
 	for isSorted(arr) == false {
 		arr = shuffle(arr)
-		visualize(arr)
+		//visualize(arr)
+		g.Image = append(g.Image, buildImage(arr))
+		g.Delay = append(g.Delay, 2)
 	}
+	writeGif("bogo", g)
 }
 
 func bubbleSort(arr []int) {
+	g := &gif.GIF{
+		LoopCount: 1,
+	}
 	var i int
 	var j int
 
@@ -86,13 +137,27 @@ func bubbleSort(arr []int) {
 			if arr[j] > arr[j+1] {
 				arr[j], arr[j+1] = arr[j+1], arr[j]
 			}
-			visualize(arr)
+			//visualize(arr)
+			g.Image = append(g.Image, buildImage(arr))
+			g.Delay = append(g.Delay, 2)
+			if len(g.Image) > 1 {
+				last := g.Image[len(g.Image)-1]
+				prev := g.Image[len(g.Image)-2]
+				fmt.Println(last)
+				fmt.Println(prev)
+			}
 		}
-		visualize(arr)
+		//visualize(arr)
+		g.Image = append(g.Image, buildImage(arr))
+		g.Delay = append(g.Delay, 2)
 	}
+	writeGif("bubble", g)
 }
 
 func combSort(arr []int) {
+	g := &gif.GIF{
+		LoopCount: 1,
+	}
 	var gap int = len(arr)
 	var swapped bool = false
 	var i int
@@ -107,13 +172,21 @@ func combSort(arr []int) {
 				arr[i], arr[i+gap] = arr[i+gap], arr[i]
 				swapped = true
 			}
-			visualize(arr)
+			//visualize(arr)
+			g.Image = append(g.Image, buildImage(arr))
+			g.Delay = append(g.Delay, 2)
 		}
-		visualize(arr)
+		//visualize(arr)
+		g.Image = append(g.Image, buildImage(arr))
+		g.Delay = append(g.Delay, 2)
 	}
+	writeGif("comb", g)
 }
 
 func countingSort(arr []int) {
+	g := &gif.GIF{
+		LoopCount: 1,
+	}
 	count := make([]int, max+1)
 	for _, x := range arr {
 		count[x-0]++
@@ -124,11 +197,17 @@ func countingSort(arr []int) {
 			arr[z] = i
 			z++
 		}
-		visualize(arr)
+		//visualize(arr)
+		g.Image = append(g.Image, buildImage(arr))
+		g.Delay = append(g.Delay, 2)
 	}
+	writeGif("counting", g)
 }
 
 func gnomeSort(arr []int) {
+	g := &gif.GIF{
+		LoopCount: 1,
+	}
 	var i int = 1
 
 	for i < len(arr) {
@@ -140,11 +219,17 @@ func gnomeSort(arr []int) {
 				i--
 			}
 		}
-		visualize(arr)
+		//visualize(arr)
+		g.Image = append(g.Image, buildImage(arr))
+		g.Delay = append(g.Delay, 2)
 	}
+	writeGif("gnome", g)
 }
 
 func insertionSort(arr []int) {
+	g := &gif.GIF{
+		LoopCount: 1,
+	}
 	var i int
 	var j int
 
@@ -153,13 +238,21 @@ func insertionSort(arr []int) {
 		for j > 0 && arr[j-1] > arr[j] {
 			arr[j], arr[j-1] = arr[j-1], arr[j]
 			j = j - 1
-			visualize(arr)
+			//visualize(arr)
+			g.Image = append(g.Image, buildImage(arr))
+			g.Delay = append(g.Delay, 2)
 		}
-		visualize(arr)
+		//visualize(arr)
+		g.Image = append(g.Image, buildImage(arr))
+		g.Delay = append(g.Delay, 2)
 	}
+	writeGif("insertion", g)
 }
 
 func oddEvenSort(arr []int) {
+	g := &gif.GIF{
+		LoopCount: 1,
+	}
 	var sorted bool = false
 	var i int
 
@@ -170,20 +263,30 @@ func oddEvenSort(arr []int) {
 				arr[i], arr[i+1] = arr[i+1], arr[i]
 				sorted = false
 			}
-			visualize(arr)
+			//visualize(arr)
+			g.Image = append(g.Image, buildImage(arr))
+			g.Delay = append(g.Delay, 2)
 		}
 		for i = 0; i < len(arr)-1; i += 2 {
 			if arr[i] > arr[i+1] {
 				arr[i], arr[i+1] = arr[i+1], arr[i]
 				sorted = false
 			}
-			visualize(arr)
+			//visualize(arr)
+			g.Image = append(g.Image, buildImage(arr))
+			g.Delay = append(g.Delay, 2)
 		}
-		visualize(arr)
+		//visualize(arr)
+		g.Image = append(g.Image, buildImage(arr))
+		g.Delay = append(g.Delay, 2)
 	}
+	writeGif("oddEven", g)
 }
 
 func selectionSort(arr []int) {
+	g := &gif.GIF{
+		LoopCount: 1,
+	}
 	var min int = 0
 	var i int
 	var j int
@@ -193,19 +296,29 @@ func selectionSort(arr []int) {
 		for j = i + 1; j < len(arr); j++ {
 			if arr[j] < arr[min] {
 				min = j
-				visualize(arr)
+				//visualize(arr)
+				g.Image = append(g.Image, buildImage(arr))
+				g.Delay = append(g.Delay, 2)
 			}
 		}
 		arr[i], arr[min] = arr[min], arr[i]
-		visualize(arr)
+		//visualize(arr)
+		g.Image = append(g.Image, buildImage(arr))
+		g.Delay = append(g.Delay, 2)
 	}
+	writeGif("selection", g)
 }
 
 func sleepSort(arr []int) {
+	g := &gif.GIF{
+		LoopCount: 1,
+	}
 	var j int
 	arr2 := make([]int, len(arr))
 	channel := make(chan int, 1)
-	visualize(arr)
+	//visualize(arr)
+	g.Image = append(g.Image, buildImage(arr))
+	g.Delay = append(g.Delay, 2)
 	for i := 0; i < len(arr); i++ {
 		go func(arr []int, i int) {
 			time.Sleep(time.Duration(arr[i]) * time.Second / 4)
@@ -216,8 +329,11 @@ func sleepSort(arr []int) {
 	for i := 0; i < len(arr); i++ {
 		arr2[j] = <-channel
 		j++
-		visualize(arr2)
+		//visualize(arr2)
+		g.Image = append(g.Image, buildImage(arr))
+		g.Delay = append(g.Delay, 2)
 	}
+	writeGif("sleep", g)
 }
 
 func main() {
