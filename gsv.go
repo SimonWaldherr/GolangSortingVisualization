@@ -29,15 +29,20 @@ func buildImage(arr []int) *image.Paletted {
 			color.Gray{uint8(0)},
 		},
 	)
-	fmt.Println(arr)
+	//fmt.Println(arr)
 	for k, v := range arr {
-		frame.SetColorIndex(k, v, uint8(1))
+		frame.SetColorIndex(k, max-v, uint8(1))
+		if mode == 2 {
+			for y := max - v + 1; y < max; y++ {
+				frame.SetColorIndex(k, y, uint8(1))
+			}
+		}
 	}
 	return frame
 }
 
 func writeGif(name string, g *gif.GIF) {
-	fmt.Println("size of g == ", len(g.Image))
+	//fmt.Println("size of g == ", len(g.Image))
 	w, err := os.Create(name + ".gif")
 	if err != nil {
 		fmt.Println(err)
@@ -140,12 +145,14 @@ func bubbleSort(arr []int) {
 			//visualize(arr)
 			g.Image = append(g.Image, buildImage(arr))
 			g.Delay = append(g.Delay, 2)
-			if len(g.Image) > 1 {
-				last := g.Image[len(g.Image)-1]
-				prev := g.Image[len(g.Image)-2]
-				fmt.Println(last)
-				fmt.Println(prev)
-			}
+			/*
+				if len(g.Image) > 1 {
+					last := g.Image[len(g.Image)-1]
+					prev := g.Image[len(g.Image)-2]
+					//fmt.Println(last)
+					fmt.Println(prev)
+				}
+			*/
 		}
 		//visualize(arr)
 		g.Image = append(g.Image, buildImage(arr))
