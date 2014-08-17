@@ -5,14 +5,101 @@ import (
 	cryptoRand "crypto/rand"
 	"flag"
 	"fmt"
+	"image"
+	"image/color"
+	"image/gif"
 	"math/rand"
+	"os"
 	"time"
 )
+
+type Sorter func([]int, FrameGen)
+
+type FrameGen func([]int)
+
+func (fg FrameGen) Setup(name string) {
+}
+
+func (fg FrameGen) AddFrame(arr []int) {
+	fg(arr)
+}
+
+func (fg FrameGen) Complete() {
+}
+
+type Visualizer interface {
+	Setup(string)
+	AddFrame([]int)
+	Complete()
+}
+
+type GifVisualizer struct {
+	name string
+	g    *gif.GIF
+}
+
+func (gv *GifVisualizer) Setup(name string) {
+	gv.g = &gif.GIF{
+		LoopCount: 1,
+	}
+	gv.name = name
+}
+
+func (gv *GifVisualizer) AddFrame(arr []int) {
+	frame := buildImage(arr)
+	gv.g.Image = append(gv.g.Image, frame)
+	gv.g.Delay = append(gv.g.Delay, 2)
+}
+
+func (gv *GifVisualizer) Complete() {
+	writeGif(gv.name, gv.g)
+}
 
 var max int
 var fps int
 var count int
 var mode int
+
+func buildImage(arr []int) *image.Paletted {
+	var frame = image.NewPaletted(
+		image.Rectangle{
+			image.Point{0, 0},
+			image.Point{len(arr), max},
+		},
+		color.Palette{
+			color.Gray{uint8(255)},
+			color.Gray{uint8(0)},
+		},
+	)
+	for k, v := range arr {
+		frame.SetColorIndex(k, max-v, uint8(1))
+		if mode == 2 {
+			for y := max - v + 1; y < max; y++ {
+				frame.SetColorIndex(k, y, uint8(1))
+			}
+		}
+	}
+	return frame
+}
+
+func writeGif(name string, g *gif.GIF) {
+	w, err := os.Create(name + ".gif")
+	if err != nil {
+		fmt.Println(err)
+		panic(err)
+	}
+	defer func() {
+		if err := w.Close(); err != nil {
+			fmt.Println(err)
+			panic(err)
+		}
+	}()
+	err = gif.EncodeAll(w, g)
+	if err != nil {
+		fmt.Println(err)
+		panic(err)
+	}
+}
 
 func randomArray(n int, max int) []int {
 	var i int
@@ -70,14 +157,14 @@ func isSorted(arr []int) bool {
 	return true
 }
 
-func bogoSort(arr []int) {
+func bogoSort(arr []int, frameGen FrameGen) {
 	for isSorted(arr) == false {
 		arr = shuffle(arr)
-		visualize(arr)
+		frameGen(arr)
 	}
 }
 
-func bubbleSort(arr []int) {
+func bubbleSort(arr []int, frameGen FrameGen) {
 	var i int
 	var j int
 
@@ -86,13 +173,13 @@ func bubbleSort(arr []int) {
 			if arr[j] > arr[j+1] {
 				arr[j], arr[j+1] = arr[j+1], arr[j]
 			}
-			visualize(arr)
+			frameGen(arr)
 		}
-		visualize(arr)
+		frameGen(arr)
 	}
 }
 
-func combSort(arr []int) {
+func combSort(arr []int, frameGen FrameGen) {
 	var gap int = len(arr)
 	var swapped bool = false
 	var i int
@@ -107,13 +194,13 @@ func combSort(arr []int) {
 				arr[i], arr[i+gap] = arr[i+gap], arr[i]
 				swapped = true
 			}
-			visualize(arr)
+			frameGen(arr)
 		}
-		visualize(arr)
+		frameGen(arr)
 	}
 }
 
-func countingSort(arr []int) {
+func countingSort(arr []int, frameGen FrameGen) {
 	count := make([]int, max+1)
 	for _, x := range arr {
 		count[x-0]++
@@ -124,11 +211,11 @@ func countingSort(arr []int) {
 			arr[z] = i
 			z++
 		}
-		visualize(arr)
+		frameGen(arr)
 	}
 }
 
-func gnomeSort(arr []int) {
+func gnomeSort(arr []int, frameGen FrameGen) {
 	var i int = 1
 
 	for i < len(arr) {
@@ -140,11 +227,11 @@ func gnomeSort(arr []int) {
 				i--
 			}
 		}
-		visualize(arr)
+		frameGen(arr)
 	}
 }
 
-func insertionSort(arr []int) {
+func insertionSort(arr []int, frameGen FrameGen) {
 	var i int
 	var j int
 
@@ -153,13 +240,13 @@ func insertionSort(arr []int) {
 		for j > 0 && arr[j-1] > arr[j] {
 			arr[j], arr[j-1] = arr[j-1], arr[j]
 			j = j - 1
-			visualize(arr)
+			frameGen(arr)
 		}
-		visualize(arr)
+		frameGen(arr)
 	}
 }
 
-func oddEvenSort(arr []int) {
+func oddEvenSort(arr []int, frameGen FrameGen) {
 	var sorted bool = false
 	var i int
 
@@ -170,20 +257,20 @@ func oddEvenSort(arr []int) {
 				arr[i], arr[i+1] = arr[i+1], arr[i]
 				sorted = false
 			}
-			visualize(arr)
+			frameGen(arr)
 		}
 		for i = 0; i < len(arr)-1; i += 2 {
 			if arr[i] > arr[i+1] {
 				arr[i], arr[i+1] = arr[i+1], arr[i]
 				sorted = false
 			}
-			visualize(arr)
+			frameGen(arr)
 		}
-		visualize(arr)
+		frameGen(arr)
 	}
 }
 
-func selectionSort(arr []int) {
+func selectionSort(arr []int, frameGen FrameGen) {
 	var min int = 0
 	var i int
 	var j int
@@ -193,19 +280,19 @@ func selectionSort(arr []int) {
 		for j = i + 1; j < len(arr); j++ {
 			if arr[j] < arr[min] {
 				min = j
-				visualize(arr)
+				frameGen(arr)
 			}
 		}
 		arr[i], arr[min] = arr[min], arr[i]
-		visualize(arr)
+		frameGen(arr)
 	}
 }
 
-func sleepSort(arr []int) {
+func sleepSort(arr []int, frameGen FrameGen) {
 	var j int
 	arr2 := make([]int, len(arr))
 	channel := make(chan int, 1)
-	visualize(arr)
+	frameGen(arr)
 	for i := 0; i < len(arr); i++ {
 		go func(arr []int, i int) {
 			time.Sleep(time.Duration(arr[i]) * time.Second / 4)
@@ -216,8 +303,26 @@ func sleepSort(arr []int) {
 	for i := 0; i < len(arr); i++ {
 		arr2[j] = <-channel
 		j++
-		visualize(arr2)
+		frameGen(arr2)
 	}
+}
+
+func makeVisualizer(name string) Visualizer {
+	if name == "console" {
+		return FrameGen(visualize)
+	}
+	if name == "gif" {
+		return &GifVisualizer{}
+	}
+	return nil
+}
+
+func runSort(visName string, algo string, sortFunc Sorter) {
+	visualizer := makeVisualizer(visName)
+	visualizer.Setup(algo)
+	arr := randomArray(count, max)
+	sortFunc(arr, visualizer.AddFrame)
+	visualizer.Complete()
 }
 
 func main() {
@@ -227,47 +332,33 @@ func main() {
 	flag.IntVar(&max, "max", 9, "highest value")
 	flag.IntVar(&count, "count", 30, "number of values")
 	flag.IntVar(&mode, "mode", 1, "visualization mode")
+
+	var visName string
+	flag.StringVar(&visName, "vis", "gif", "Select output: [gif]/console")
 	flag.Parse()
-	arr := randomArray(count, max)
+
+	sorterMap := map[string]Sorter{
+//		"bogo":      bogoSort,
+		"bubble":    bubbleSort,
+		"comb":      combSort,
+		"counting":  countingSort,
+		"gnome":     gnomeSort,
+		"insertion": insertionSort,
+		"oddEven":   oddEvenSort,
+		"selection": selectionSort,
+		"sleep":     sleepSort,
+	}
+
 	fmt.Printf("sorting via %v-sort\nhighest value: %v\nnumber of values: %v\n\n", algo, max, count)
 	time.Sleep(time.Second * 1)
-	switch algo {
-	case "bogo":
-		bogoSort(arr)
-	case "bubble":
-		bubbleSort(arr)
-	case "comb":
-		combSort(arr)
-	case "counting":
-		countingSort(arr)
-	case "gnome":
-		gnomeSort(arr)
-	case "insertion":
-		insertionSort(arr)
-	case "oddEven":
-		oddEvenSort(arr)
-	case "selection":
-		selectionSort(arr)
-	case "sleep":
-		sleepSort(arr)
-	case "all":
-		arr = randomArray(count, max)
-		bogoSort(arr)
-		arr = randomArray(count, max)
-		bubbleSort(arr)
-		arr = randomArray(count, max)
-		combSort(arr)
-		arr = randomArray(count, max)
-		countingSort(arr)
-		arr = randomArray(count, max)
-		gnomeSort(arr)
-		arr = randomArray(count, max)
-		insertionSort(arr)
-		arr = randomArray(count, max)
-		oddEvenSort(arr)
-		arr = randomArray(count, max)
-		selectionSort(arr)
-		arr = randomArray(count, max)
-		sleepSort(arr)
+	if algo == "all" {
+		for k, v := range sorterMap {
+			runSort(visName, k, v)
+		}
+	} else {
+		sortFunc := sorterMap[algo]
+		if sortFunc != nil {
+			runSort(visName, algo, sortFunc)
+		}
 	}
 }
