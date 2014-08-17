@@ -101,21 +101,7 @@ func writeGif(name string, g *gif.GIF) {
 	}
 }
 
-func randomArray(n int, max int) []int {
-	var i int
-	var number float64
-	arr := make([]int, n)
-
-	for i = 0; i < n; i++ {
-		b := make([]byte, 1)
-		cryptoRand.Read(b)
-		number = float64(b[0])
-		arr[i] = int(number / 255 * float64(max))
-	}
-	return arr
-}
-
-func visualize(arr []int) {
+func writeStdout(arr []int) {
 	var buffer bytes.Buffer
 	var x int
 	var y int
@@ -139,6 +125,20 @@ func visualize(arr []int) {
 	fmt.Print(buffer.String())
 }
 
+func randomArray(n int, max int) []int {
+	var i int
+	var number float64
+	arr := make([]int, n)
+
+	for i = 0; i < n; i++ {
+		b := make([]byte, 1)
+		cryptoRand.Read(b)
+		number = float64(b[0])
+		arr[i] = int(number / 255 * float64(max))
+	}
+	return arr
+}
+
 func shuffle(arr []int) []int {
 	for i := len(arr) - 1; i > 0; i-- {
 		if j := rand.Intn(i + 1); i != j {
@@ -157,6 +157,9 @@ func isSorted(arr []int) bool {
 	return true
 }
 
+/* SORTING ALGORITHMS BEGIN HERE */
+
+/* http://en.wikipedia.org/wiki/Bogosort */
 func bogoSort(arr []int, frameGen FrameGen) {
 	for isSorted(arr) == false {
 		arr = shuffle(arr)
@@ -164,6 +167,7 @@ func bogoSort(arr []int, frameGen FrameGen) {
 	}
 }
 
+/* http://en.wikipedia.org/wiki/Bubble_sort */
 func bubbleSort(arr []int, frameGen FrameGen) {
 	var i int
 	var j int
@@ -179,6 +183,7 @@ func bubbleSort(arr []int, frameGen FrameGen) {
 	}
 }
 
+/* http://en.wikipedia.org/wiki/Comb_sort */
 func combSort(arr []int, frameGen FrameGen) {
 	var gap int = len(arr)
 	var swapped bool = false
@@ -200,6 +205,7 @@ func combSort(arr []int, frameGen FrameGen) {
 	}
 }
 
+/* http://en.wikipedia.org/wiki/Counting_sort */
 func countingSort(arr []int, frameGen FrameGen) {
 	count := make([]int, max+1)
 	for _, x := range arr {
@@ -215,6 +221,7 @@ func countingSort(arr []int, frameGen FrameGen) {
 	}
 }
 
+/* http://en.wikipedia.org/wiki/Gnome_sort */
 func gnomeSort(arr []int, frameGen FrameGen) {
 	var i int = 1
 
@@ -231,6 +238,7 @@ func gnomeSort(arr []int, frameGen FrameGen) {
 	}
 }
 
+/* http://en.wikipedia.org/wiki/Insertion_sort */
 func insertionSort(arr []int, frameGen FrameGen) {
 	var i int
 	var j int
@@ -246,6 +254,7 @@ func insertionSort(arr []int, frameGen FrameGen) {
 	}
 }
 
+/* http://en.wikipedia.org/wiki/Odd–even_sort */
 func oddEvenSort(arr []int, frameGen FrameGen) {
 	var sorted bool = false
 	var i int
@@ -270,6 +279,7 @@ func oddEvenSort(arr []int, frameGen FrameGen) {
 	}
 }
 
+/* http://en.wikipedia.org/wiki/Selection_sort */
 func selectionSort(arr []int, frameGen FrameGen) {
 	var min int = 0
 	var i int
@@ -288,6 +298,7 @@ func selectionSort(arr []int, frameGen FrameGen) {
 	}
 }
 
+/* NOT ON WIKIPEDIA */
 func sleepSort(arr []int, frameGen FrameGen) {
 	var j int
 	arr2 := make([]int, len(arr))
@@ -307,9 +318,11 @@ func sleepSort(arr []int, frameGen FrameGen) {
 	}
 }
 
+/* SORTING ALGORITHMS END HERE */
+
 func makeVisualizer(name string) Visualizer {
 	if name == "console" {
-		return FrameGen(visualize)
+		return FrameGen(writeStdout)
 	}
 	if name == "gif" {
 		return &GifVisualizer{}
@@ -327,18 +340,18 @@ func runSort(visName string, algo string, sortFunc Sorter) {
 
 func main() {
 	var algo string
+	var visName string
 	flag.StringVar(&algo, "algo", "bubble", "Select sorting algorithm all/bogo/[bubble]/comb/counting/gnome/insertion/oddEven/selection/sleep")
 	flag.IntVar(&fps, "fps", 10, "frames per second")
 	flag.IntVar(&max, "max", 9, "highest value")
 	flag.IntVar(&count, "count", 30, "number of values")
 	flag.IntVar(&mode, "mode", 1, "visualization mode")
+	flag.StringVar(&visName, "vis", "console", "Select output: [console]/gif")
 
-	var visName string
-	flag.StringVar(&visName, "vis", "gif", "Select output: [gif]/console")
 	flag.Parse()
 
 	sorterMap := map[string]Sorter{
-//		"bogo":      bogoSort,
+		//	"bogo":    bogoSort,
 		"bubble":    bubbleSort,
 		"comb":      combSort,
 		"counting":  countingSort,
