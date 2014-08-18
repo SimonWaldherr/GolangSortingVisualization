@@ -39,6 +39,8 @@
 
 ###SleepSort
 
+![Sleep Sort Animation](http://simonwaldherr.github.io/GolangSortingVisualization/sort_sleep.gif)
+
 ##HowTo
 
 ```sh

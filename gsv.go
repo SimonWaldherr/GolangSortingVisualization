@@ -321,7 +321,7 @@ func sleepSort(arr []int, frameGen FrameGen) {
 /* SORTING ALGORITHMS END HERE */
 
 func makeVisualizer(name string) Visualizer {
-	if name == "console" {
+	if name == "stdout" {
 		return FrameGen(writeStdout)
 	}
 	if name == "gif" {
@@ -346,7 +346,7 @@ func main() {
 	flag.IntVar(&max, "max", 9, "highest value")
 	flag.IntVar(&count, "count", 30, "number of values")
 	flag.IntVar(&mode, "mode", 1, "visualization mode")
-	flag.StringVar(&visName, "vis", "console", "Select output: [console]/gif")
+	flag.StringVar(&visName, "vis", "stdout", "Select output: [stdout]/gif")
 
 	flag.Parse()
 
