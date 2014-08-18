@@ -11,29 +11,31 @@
 
 ###BubbleSort
 
-![Bubble Sort Animation](http://upload.wikimedia.org/wikipedia/commons/3/37/Bubble_sort_animation.gif)
+![Bubble Sort Animation](http://simonwaldherr.github.io/GolangSortingVisualization/sort_bubble.gif)
 
 ###CombSort
 
-![Comb Sort Animation](http://upload.wikimedia.org/wikipedia/commons/4/46/Comb_sort_demo.gif)
+![Comb Sort Animation](http://simonwaldherr.github.io/GolangSortingVisualization/sort_comb.gif)
 
-###[CountingSort](http://en.wikipedia.org/wiki/Counting_sort)
+###CountingSort
+
+![Counting Sort Animation](http://simonwaldherr.github.io/GolangSortingVisualization/sort_counting.gif)
 
 ###GnomeSort
 
-![Gnome Sort Animation](http://upload.wikimedia.org/wikipedia/commons/3/37/Sorting_gnomesort_anim.gif)
+![Gnome Sort Animation](http://simonwaldherr.github.io/GolangSortingVisualization/sort_gnome.gif)
 
 ###InsertionSort
 
-![Insertion Sort Animation](http://upload.wikimedia.org/wikipedia/commons/4/42/Insertion_sort.gif)
+![Insertion Sort Animation](http://simonwaldherr.github.io/GolangSortingVisualization/sort_insertion.gif)
 
 ###OddEvenSort
 
-![OddEven Sort Animation](http://upload.wikimedia.org/wikipedia/commons/1/1b/Odd_even_sort_animation.gif)
+![OddEven Sort Animation](http://simonwaldherr.github.io/GolangSortingVisualization/sort_oddEven.gif)
 
 ###SelectionSort
 
-![Selection Sort Animation](http://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Selection_sort_animation.gif/250px-Selection_sort_animation.gif)
+![Selection Sort Animation](http://simonwaldherr.github.io/GolangSortingVisualization/sort_selection.gif)
 
 ###SleepSort
 
@@ -51,6 +53,7 @@ Usage of gsv:
   -fps=10: frames per second
   -max=9: highest value
   -mode=1: visualization mode
+  -vis="console": Select output: [console]/gif
 ```
 
 ##License
