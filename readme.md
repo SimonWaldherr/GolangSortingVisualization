@@ -7,7 +7,7 @@
 
 ###BogoSort
 
-[BogoSort sorts by shuffling until all is sorted](http://en.wikipedia.org/wiki/Bogosort)
+![Bubble Sort Animation](http://simonwaldherr.github.io/GolangSortingVisualization/sort_bogo.gif)
 
 ###BubbleSort
 
@@ -55,7 +55,7 @@ Usage of gsv:
   -fps=10: frames per second
   -max=9: highest value
   -mode=1: visualization mode
-  -vis="console": Select output: [console]/gif
+  -vis="stdout": Select output: [stdout]/gif
 ```
 
 ##License
