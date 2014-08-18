@@ -177,7 +177,7 @@ func bubbleSort(arr []int, frameGen FrameGen) {
 			if arr[j] > arr[j+1] {
 				arr[j], arr[j+1] = arr[j+1], arr[j]
 			}
-			frameGen(arr)
+			//frameGen(arr)
 		}
 		frameGen(arr)
 	}
