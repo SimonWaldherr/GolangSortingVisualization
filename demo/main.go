@@ -1,7 +1,7 @@
 package main
 
 import (
-	gsv ".."
+	gsv "github.com/SimonWaldherr/GolangSortingVisualization"
 	"flag"
 	"fmt"
 	"time"
