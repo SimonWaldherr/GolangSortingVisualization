@@ -25,4 +25,4 @@ if [ "x$OUTPUT" == "x" ]
   OUTPUT="stdout"
 fi
 
-go run gsv.go -count=$(tput cols) -max=$(tput lines) -fps=$FPS -algo=$ALGO -vis=$OUTPUT
+go run demo/main.go -count=$(tput cols) -max=$(tput lines) -fps=$FPS -algo=$ALGO -vis=$OUTPUT
