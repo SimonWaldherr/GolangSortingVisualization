@@ -158,7 +158,7 @@ func isSorted(arr []int) bool {
 
 /* SORTING ALGORITHMS BEGIN HERE */
 
-/* http://en.wikipedia.org/wiki/Bogosort */
+/* https://en.wikipedia.org/wiki/Bogosort */
 func BogoSort(arr []int, frameGen FrameGen) {
 	for isSorted(arr) == false {
 		arr = shuffle(arr)
@@ -166,7 +166,7 @@ func BogoSort(arr []int, frameGen FrameGen) {
 	}
 }
 
-/* http://en.wikipedia.org/wiki/Bubble_sort */
+/* https://en.wikipedia.org/wiki/Bubble_sort */
 func BubbleSort(arr []int, frameGen FrameGen) {
 	var i int
 	var j int
@@ -182,7 +182,7 @@ func BubbleSort(arr []int, frameGen FrameGen) {
 	}
 }
 
-/* http://en.wikipedia.org/wiki/Comb_sort */
+/* https://en.wikipedia.org/wiki/Comb_sort */
 func CombSort(arr []int, frameGen FrameGen) {
 	var gap int = len(arr)
 	var swapped bool = false
@@ -204,7 +204,7 @@ func CombSort(arr []int, frameGen FrameGen) {
 	}
 }
 
-/* http://en.wikipedia.org/wiki/Counting_sort */
+/* https://en.wikipedia.org/wiki/Counting_sort */
 func CountingSort(arr []int, frameGen FrameGen) {
 	count := make([]int, Max+1)
 	for _, x := range arr {
@@ -220,7 +220,7 @@ func CountingSort(arr []int, frameGen FrameGen) {
 	}
 }
 
-/* http://en.wikipedia.org/wiki/Gnome_sort */
+/* https://en.wikipedia.org/wiki/Gnome_sort */
 func GnomeSort(arr []int, frameGen FrameGen) {
 	var i int = 1
 
@@ -237,7 +237,7 @@ func GnomeSort(arr []int, frameGen FrameGen) {
 	}
 }
 
-/* http://en.wikipedia.org/wiki/Insertion_sort */
+/* https://en.wikipedia.org/wiki/Insertion_sort */
 func InsertionSort(arr []int, frameGen FrameGen) {
 	var i int
 	var j int
@@ -253,7 +253,7 @@ func InsertionSort(arr []int, frameGen FrameGen) {
 	}
 }
 
-/* http://en.wikipedia.org/wiki/Odd–even_sort */
+/* https://en.wikipedia.org/wiki/Odd–even_sort */
 func OddEvenSort(arr []int, frameGen FrameGen) {
 	var sorted bool = false
 	var i int
@@ -278,7 +278,7 @@ func OddEvenSort(arr []int, frameGen FrameGen) {
 	}
 }
 
-/* http://en.wikipedia.org/wiki/Selection_sort */
+/* https://en.wikipedia.org/wiki/Selection_sort */
 func SelectionSort(arr []int, frameGen FrameGen) {
 	var min int = 0
 	var i int
@@ -315,4 +315,25 @@ func SleepSort(arr []int, frameGen FrameGen) {
 		j++
 		frameGen(arr2)
 	}
+}
+
+/* https://en.wikipedia.org/wiki/Stooge_sort */
+func StoogeSort(arr []int, frameGen FrameGen) {
+	stoogesort(arr, 0, len(arr)-1, frameGen)
+}
+
+func stoogesort(arr []int, i int, j int, frameGen FrameGen) []int {
+	var t int
+	if arr[j] < arr[i] {
+		arr[i], arr[j] = arr[j], arr[i]
+	}
+	if j-i+1 > 2 {
+		t = (j - i + 1) / 3
+		arr = stoogesort(arr, i, j-t, frameGen)
+		arr = stoogesort(arr, i+t, j, frameGen)
+		arr = stoogesort(arr, i, j-t, frameGen)
+		frameGen(arr)
+	}
+
+	return arr
 }

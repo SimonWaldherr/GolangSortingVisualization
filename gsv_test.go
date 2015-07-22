@@ -34,6 +34,7 @@ func Test_Main(t *testing.T) {
 		"oddEven":   OddEvenSort,
 		"selection": SelectionSort,
 		"sleep":     SleepSort,
+		"stooge":    StoogeSort,
 	}
 
 	for k, v := range sorterMap {

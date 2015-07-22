@@ -1,6 +1,7 @@
 language: go
 
 go:
+  - release
   - tip
 
 before_install:

@@ -1,9 +1,9 @@
 package main
 
 import (
-	gsv "github.com/SimonWaldherr/GolangSortingVisualization"
 	"flag"
 	"fmt"
+	gsv "github.com/SimonWaldherr/GolangSortingVisualization"
 	"time"
 )
 
@@ -47,6 +47,7 @@ func main() {
 		"oddEven":   gsv.OddEvenSort,
 		"selection": gsv.SelectionSort,
 		"sleep":     gsv.SleepSort,
+		"stooge":    gsv.StoogeSort,
 	}
 
 	fmt.Printf("sorting via %v-sort\nhighest value: %v\nnumber of values: %v\n\n", algo, gsv.Max, gsv.Count)
