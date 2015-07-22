@@ -1,5 +1,7 @@
 language: go
 
+sudo: false
+
 go:
   - release
   - tip
@@ -8,6 +10,7 @@ before_install:
     - go get github.com/axw/gocov/gocov
     - go get github.com/mattn/goveralls
     - go get golang.org/x/tools/cmd/cover
+    - go get -t simonwaldherr.de/go/GolangSortingVisualization
 
 script:
     - $HOME/gopath/bin/goveralls -repotoken MSToT9De9SIxTAH8BD3JsN68xfWAPEqDP
