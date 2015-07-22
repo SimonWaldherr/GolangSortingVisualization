@@ -10,16 +10,14 @@ before_install:
     - go get github.com/axw/gocov/gocov
     - go get github.com/mattn/goveralls
     - go get golang.org/x/tools/cmd/cover
-    - go get -t simonwaldherr.de/go/GolangSortingVisualization
 
 install:
     - go get -t simonwaldherr.de/go/GolangSortingVisualization
-    - go get github.com/modocache/gover
+    - go get -t github.com/SimonWaldherr/GolangSortingVisualization
 
 script:
     - go test -v -coverprofile=gsv.coverprofile
-    - $HOME/gopath/bin/gover
-    - $HOME/gopath/bin/goveralls -coverprofile=gover.coverprofile -service=travis-ci
+    - $HOME/gopath/bin/goveralls -coverprofile=gsv.coverprofile -service=travis-ci -repotoken=MSToT9De9SIxTAH8BD3JsN68xfWAPEqDP
 
 notifications:
   email:
