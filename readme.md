@@ -43,6 +43,10 @@
 
 ![Sleep Sort Animation](http://simonwaldherr.github.io/GolangSortingVisualization/sort_sleep.gif)
 
+###StoogeSort
+
+![Stooge Sort Animation](http://simonwaldherr.github.io/GolangSortingVisualization/sort_stooge.gif)
+
 ##HowTo
 
 ```sh
