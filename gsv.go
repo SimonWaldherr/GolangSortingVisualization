@@ -16,6 +16,8 @@ type Sorter func([]int, FrameGen)
 
 type FrameGen func([]int)
 
+var test bool = false
+
 func (fg FrameGen) Setup(name string) {
 }
 
@@ -119,8 +121,12 @@ func WriteStdout(arr []int) {
 		}
 		buffer.WriteByte('\n')
 	}
-	time.Sleep(time.Second / time.Duration(Fps))
-	fmt.Print("\033[2J")
+
+	if !test {
+		time.Sleep(time.Second / time.Duration(Fps))
+		fmt.Print("\033[2J")
+	}
+
 	fmt.Print(buffer.String())
 }
 

@@ -17,7 +17,7 @@ install:
     - go get github.com/modocache/gover
 
 script:
-    - go test -v
+    - go test -v -coverprofile=gsv.coverprofile
     - $HOME/gopath/bin/gover
     - $HOME/gopath/bin/goveralls -coverprofile=gover.coverprofile -service=travis-ci
 
