@@ -1,41 +1,47 @@
 #GolangSortingVisualization
 
-[![Gittip donate button](http://img.shields.io/gittip/bevry.png)](https://www.gittip.com/SimonWaldherr/ "Donate weekly to this project using Gittip") [![Flattr donate button](https://raw.github.com/balupton/flattr-buttons/master/badge-89x18.gif)](https://flattr.com/submit/auto?user_id=SimonWaldherr&url=http%3A%2F%2Fgithub.com%2FSimonWaldherr%2FGolangSortingVisualization "Donate monthly to this project using Flattr")
+[![Coverage Status](https://coveralls.io/repos/SimonWaldherr/GolangSortingVisualization/badge.png)](https://coveralls.io/r/SimonWaldherr/GolangSortingVisualization) 
+[![Build Status](https://travis-ci.org/SimonWaldherr/GolangSortingVisualization.svg?branch=master)](https://travis-ci.org/SimonWaldherr/GolangSortingVisualization) 
+[![Flattr donate button](https://raw.github.com/balupton/flattr-buttons/master/badge-89x18.gif)](https://flattr.com/submit/auto?user_id=SimonWaldherr&url=http%3A%2F%2Fgithub.com%2FSimonWaldherr%2FGolangSortingVisualization "Donate monthly to this project using Flattr")
 
 
 ##Sort Algorithms
 
 ###BogoSort
 
-[BogoSort sorts by shuffling until all is sorted](http://en.wikipedia.org/wiki/Bogosort)
+![Bubble Sort Animation](http://simonwaldherr.github.io/GolangSortingVisualization/sort_bogo.gif)
 
 ###BubbleSort
 
-![Bubble Sort Animation](http://upload.wikimedia.org/wikipedia/commons/3/37/Bubble_sort_animation.gif)
+![Bubble Sort Animation](http://simonwaldherr.github.io/GolangSortingVisualization/sort_bubble.gif)
 
 ###CombSort
 
-![Comb Sort Animation](http://upload.wikimedia.org/wikipedia/commons/4/46/Comb_sort_demo.gif)
+![Comb Sort Animation](http://simonwaldherr.github.io/GolangSortingVisualization/sort_comb.gif)
 
-###[CountingSort](http://en.wikipedia.org/wiki/Counting_sort)
+###CountingSort
+
+![Counting Sort Animation](http://simonwaldherr.github.io/GolangSortingVisualization/sort_counting.gif)
 
 ###GnomeSort
 
-![Gnome Sort Animation](http://upload.wikimedia.org/wikipedia/commons/3/37/Sorting_gnomesort_anim.gif)
+![Gnome Sort Animation](http://simonwaldherr.github.io/GolangSortingVisualization/sort_gnome.gif)
 
 ###InsertionSort
 
-![Insertion Sort Animation](http://upload.wikimedia.org/wikipedia/commons/4/42/Insertion_sort.gif)
+![Insertion Sort Animation](http://simonwaldherr.github.io/GolangSortingVisualization/sort_insertion.gif)
 
 ###OddEvenSort
 
-![OddEven Sort Animation](http://upload.wikimedia.org/wikipedia/commons/1/1b/Odd_even_sort_animation.gif)
+![OddEven Sort Animation](http://simonwaldherr.github.io/GolangSortingVisualization/sort_oddEven.gif)
 
 ###SelectionSort
 
-![Selection Sort Animation](http://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Selection_sort_animation.gif/250px-Selection_sort_animation.gif)
+![Selection Sort Animation](http://simonwaldherr.github.io/GolangSortingVisualization/sort_selection.gif)
 
 ###SleepSort
+
+![Sleep Sort Animation](http://simonwaldherr.github.io/GolangSortingVisualization/sort_sleep.gif)
 
 ##HowTo
 
@@ -51,6 +57,7 @@ Usage of gsv:
   -fps=10: frames per second
   -max=9: highest value
   -mode=1: visualization mode
+  -vis="stdout": Select output: [stdout]/gif
 ```
 
 ##License

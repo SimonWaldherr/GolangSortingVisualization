@@ -1,9 +1,8 @@
-package main
+package gsv
 
 import (
 	"bytes"
 	cryptoRand "crypto/rand"
-	"flag"
 	"fmt"
 	"image"
 	"image/color"
@@ -16,6 +15,8 @@ import (
 type Sorter func([]int, FrameGen)
 
 type FrameGen func([]int)
+
+var test bool = false
 
 func (fg FrameGen) Setup(name string) {
 }
@@ -52,19 +53,19 @@ func (gv *GifVisualizer) AddFrame(arr []int) {
 }
 
 func (gv *GifVisualizer) Complete() {
-	writeGif(gv.name, gv.g)
+	WriteGif(gv.name, gv.g)
 }
 
-var max int
-var fps int
-var count int
-var mode int
+var Max int
+var Fps int
+var Count int
+var Mode int
 
 func buildImage(arr []int) *image.Paletted {
 	var frame = image.NewPaletted(
 		image.Rectangle{
 			image.Point{0, 0},
-			image.Point{len(arr), max},
+			image.Point{len(arr), Max},
 		},
 		color.Palette{
 			color.Gray{uint8(255)},
@@ -72,9 +73,9 @@ func buildImage(arr []int) *image.Paletted {
 		},
 	)
 	for k, v := range arr {
-		frame.SetColorIndex(k, max-v, uint8(1))
-		if mode == 2 {
-			for y := max - v + 1; y < max; y++ {
+		frame.SetColorIndex(k, Max-v, uint8(1))
+		if Mode == 2 {
+			for y := Max - v + 1; y < Max; y++ {
 				frame.SetColorIndex(k, y, uint8(1))
 			}
 		}
@@ -82,37 +83,37 @@ func buildImage(arr []int) *image.Paletted {
 	return frame
 }
 
-func writeGif(name string, g *gif.GIF) {
+func WriteGif(name string, g *gif.GIF) {
 	w, err := os.Create(name + ".gif")
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("os.Create")
 		panic(err)
 	}
 	defer func() {
 		if err := w.Close(); err != nil {
-			fmt.Println(err)
+			fmt.Println("w.Close")
 			panic(err)
 		}
 	}()
 	err = gif.EncodeAll(w, g)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("gif.EncodeAll")
 		panic(err)
 	}
 }
 
-func writeStdout(arr []int) {
+func WriteStdout(arr []int) {
 	var buffer bytes.Buffer
 	var x int
 	var y int
 
-	for y = 0; y < max; y++ {
+	for y = 0; y < Max; y++ {
 		for x = 0; x < len(arr); x++ {
 			if arr[x] == y {
 				buffer.WriteByte(byte('#'))
-			} else if arr[x] < y && mode == 1 {
+			} else if arr[x] < y && Mode == 1 {
 				buffer.WriteByte(byte('#'))
-			} else if arr[x] > y && mode == 2 {
+			} else if arr[x] > y && Mode == 2 {
 				buffer.WriteByte(byte('#'))
 			} else {
 				buffer.WriteByte(byte(' '))
@@ -120,12 +121,17 @@ func writeStdout(arr []int) {
 		}
 		buffer.WriteByte('\n')
 	}
-	time.Sleep(time.Second / time.Duration(fps))
-	fmt.Print("\033[2J")
-	fmt.Print(buffer.String())
+
+	if !test {
+		time.Sleep(time.Second / time.Duration(Fps))
+		fmt.Print("\033[2J")
+		fmt.Print(buffer.String())
+	} else {
+		fmt.Print(".")
+	}
 }
 
-func randomArray(n int, max int) []int {
+func RandomArray(n int, max int) []int {
 	var i int
 	var number float64
 	arr := make([]int, n)
@@ -159,16 +165,16 @@ func isSorted(arr []int) bool {
 
 /* SORTING ALGORITHMS BEGIN HERE */
 
-/* http://en.wikipedia.org/wiki/Bogosort */
-func bogoSort(arr []int, frameGen FrameGen) {
+/* https://en.wikipedia.org/wiki/Bogosort */
+func BogoSort(arr []int, frameGen FrameGen) {
 	for isSorted(arr) == false {
 		arr = shuffle(arr)
 		frameGen(arr)
 	}
 }
 
-/* http://en.wikipedia.org/wiki/Bubble_sort */
-func bubbleSort(arr []int, frameGen FrameGen) {
+/* https://en.wikipedia.org/wiki/Bubble_sort */
+func BubbleSort(arr []int, frameGen FrameGen) {
 	var i int
 	var j int
 
@@ -183,8 +189,8 @@ func bubbleSort(arr []int, frameGen FrameGen) {
 	}
 }
 
-/* http://en.wikipedia.org/wiki/Comb_sort */
-func combSort(arr []int, frameGen FrameGen) {
+/* https://en.wikipedia.org/wiki/Comb_sort */
+func CombSort(arr []int, frameGen FrameGen) {
 	var gap int = len(arr)
 	var swapped bool = false
 	var i int
@@ -205,9 +211,9 @@ func combSort(arr []int, frameGen FrameGen) {
 	}
 }
 
-/* http://en.wikipedia.org/wiki/Counting_sort */
-func countingSort(arr []int, frameGen FrameGen) {
-	count := make([]int, max+1)
+/* https://en.wikipedia.org/wiki/Counting_sort */
+func CountingSort(arr []int, frameGen FrameGen) {
+	count := make([]int, Max+1)
 	for _, x := range arr {
 		count[x-0]++
 	}
@@ -221,8 +227,8 @@ func countingSort(arr []int, frameGen FrameGen) {
 	}
 }
 
-/* http://en.wikipedia.org/wiki/Gnome_sort */
-func gnomeSort(arr []int, frameGen FrameGen) {
+/* https://en.wikipedia.org/wiki/Gnome_sort */
+func GnomeSort(arr []int, frameGen FrameGen) {
 	var i int = 1
 
 	for i < len(arr) {
@@ -238,8 +244,8 @@ func gnomeSort(arr []int, frameGen FrameGen) {
 	}
 }
 
-/* http://en.wikipedia.org/wiki/Insertion_sort */
-func insertionSort(arr []int, frameGen FrameGen) {
+/* https://en.wikipedia.org/wiki/Insertion_sort */
+func InsertionSort(arr []int, frameGen FrameGen) {
 	var i int
 	var j int
 
@@ -254,8 +260,8 @@ func insertionSort(arr []int, frameGen FrameGen) {
 	}
 }
 
-/* http://en.wikipedia.org/wiki/Odd–even_sort */
-func oddEvenSort(arr []int, frameGen FrameGen) {
+/* https://en.wikipedia.org/wiki/Odd–even_sort */
+func OddEvenSort(arr []int, frameGen FrameGen) {
 	var sorted bool = false
 	var i int
 
@@ -279,8 +285,8 @@ func oddEvenSort(arr []int, frameGen FrameGen) {
 	}
 }
 
-/* http://en.wikipedia.org/wiki/Selection_sort */
-func selectionSort(arr []int, frameGen FrameGen) {
+/* https://en.wikipedia.org/wiki/Selection_sort */
+func SelectionSort(arr []int, frameGen FrameGen) {
 	var min int = 0
 	var i int
 	var j int
@@ -299,7 +305,7 @@ func selectionSort(arr []int, frameGen FrameGen) {
 }
 
 /* NOT ON WIKIPEDIA */
-func sleepSort(arr []int, frameGen FrameGen) {
+func SleepSort(arr []int, frameGen FrameGen) {
 	var j int
 	arr2 := make([]int, len(arr))
 	channel := make(chan int, 1)
@@ -318,60 +324,23 @@ func sleepSort(arr []int, frameGen FrameGen) {
 	}
 }
 
-/* SORTING ALGORITHMS END HERE */
-
-func makeVisualizer(name string) Visualizer {
-	if name == "console" {
-		return FrameGen(writeStdout)
-	}
-	if name == "gif" {
-		return &GifVisualizer{}
-	}
-	return nil
+/* https://en.wikipedia.org/wiki/Stooge_sort */
+func StoogeSort(arr []int, frameGen FrameGen) {
+	stoogesort(arr, 0, len(arr)-1, frameGen)
 }
 
-func runSort(visName string, algo string, sortFunc Sorter) {
-	visualizer := makeVisualizer(visName)
-	visualizer.Setup(algo)
-	arr := randomArray(count, max)
-	sortFunc(arr, visualizer.AddFrame)
-	visualizer.Complete()
-}
-
-func main() {
-	var algo string
-	var visName string
-	flag.StringVar(&algo, "algo", "bubble", "Select sorting algorithm all/bogo/[bubble]/comb/counting/gnome/insertion/oddEven/selection/sleep")
-	flag.IntVar(&fps, "fps", 10, "frames per second")
-	flag.IntVar(&max, "max", 9, "highest value")
-	flag.IntVar(&count, "count", 30, "number of values")
-	flag.IntVar(&mode, "mode", 1, "visualization mode")
-	flag.StringVar(&visName, "vis", "console", "Select output: [console]/gif")
-
-	flag.Parse()
-
-	sorterMap := map[string]Sorter{
-		//	"bogo":    bogoSort,
-		"bubble":    bubbleSort,
-		"comb":      combSort,
-		"counting":  countingSort,
-		"gnome":     gnomeSort,
-		"insertion": insertionSort,
-		"oddEven":   oddEvenSort,
-		"selection": selectionSort,
-		"sleep":     sleepSort,
+func stoogesort(arr []int, i int, j int, frameGen FrameGen) []int {
+	var t int
+	if arr[j] < arr[i] {
+		arr[i], arr[j] = arr[j], arr[i]
+	}
+	if j-i+1 > 2 {
+		t = (j - i + 1) / 3
+		arr = stoogesort(arr, i, j-t, frameGen)
+		arr = stoogesort(arr, i+t, j, frameGen)
+		arr = stoogesort(arr, i, j-t, frameGen)
+		frameGen(arr)
 	}
 
-	fmt.Printf("sorting via %v-sort\nhighest value: %v\nnumber of values: %v\n\n", algo, max, count)
-	time.Sleep(time.Second * 1)
-	if algo == "all" {
-		for k, v := range sorterMap {
-			runSort(visName, k, v)
-		}
-	} else {
-		sortFunc := sorterMap[algo]
-		if sortFunc != nil {
-			runSort(visName, algo, sortFunc)
-		}
-	}
+	return arr
 }

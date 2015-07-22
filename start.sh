@@ -4,7 +4,7 @@ echo "INSERT A FRAMERATE [30]"
 read -t 10 FPS
 
 echo "INPUT A NAME OF A SORTING ALGORITHM"
-echo "[all]/bogo/bubble/comb/counting/gnome/insertion/oddEven/selection/sleep"
+echo "[all]/bogo/bubble/comb/counting/gnome/insertion/oddEven/selection/sleep/stooge"
 read -t 30 ALGO
 
 echo "SELECT OUTPUT MODE [stdout]/gif"
@@ -25,4 +25,4 @@ if [ "x$OUTPUT" == "x" ]
   OUTPUT="stdout"
 fi
 
-go run gsv.go -count=$(tput cols) -max=$(tput lines) -fps=$FPS -algo=$ALGO -vis=$OUTPUT
+go run demo/main.go -count=$(tput cols) -max=$(tput lines) -fps=$FPS -algo=$ALGO -vis=$OUTPUT
