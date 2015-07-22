@@ -182,8 +182,8 @@ func BubbleSort(arr []int, frameGen FrameGen) {
 		for j = 0; j < len(arr)-1; j++ {
 			if arr[j] > arr[j+1] {
 				arr[j], arr[j+1] = arr[j+1], arr[j]
+				frameGen(arr)
 			}
-			frameGen(arr)
 		}
 		frameGen(arr)
 	}
@@ -204,24 +204,9 @@ func CombSort(arr []int, frameGen FrameGen) {
 			if arr[i] > arr[i+gap] {
 				arr[i], arr[i+gap] = arr[i+gap], arr[i]
 				swapped = true
+				frameGen(arr)
 			}
 			frameGen(arr)
-		}
-		frameGen(arr)
-	}
-}
-
-/* https://en.wikipedia.org/wiki/Counting_sort */
-func CountingSort(arr []int, frameGen FrameGen) {
-	count := make([]int, Max+1)
-	for _, x := range arr {
-		count[x-0]++
-	}
-	z := 0
-	for i, c := range count {
-		for ; c > 0; c-- {
-			arr[z] = i
-			z++
 		}
 		frameGen(arr)
 	}
@@ -296,8 +281,9 @@ func SelectionSort(arr []int, frameGen FrameGen) {
 		for j = i + 1; j < len(arr); j++ {
 			if arr[j] < arr[min] {
 				min = j
-				frameGen(arr)
+				//frameGen(arr)
 			}
+			frameGen(arr)
 		}
 		arr[i], arr[min] = arr[min], arr[i]
 		frameGen(arr)
@@ -333,13 +319,13 @@ func stoogesort(arr []int, i int, j int, frameGen FrameGen) []int {
 	var t int
 	if arr[j] < arr[i] {
 		arr[i], arr[j] = arr[j], arr[i]
+		frameGen(arr)
 	}
 	if j-i+1 > 2 {
 		t = (j - i + 1) / 3
 		arr = stoogesort(arr, i, j-t, frameGen)
 		arr = stoogesort(arr, i+t, j, frameGen)
 		arr = stoogesort(arr, i, j-t, frameGen)
-		frameGen(arr)
 	}
 
 	return arr
