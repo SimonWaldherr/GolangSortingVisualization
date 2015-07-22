@@ -125,9 +125,10 @@ func WriteStdout(arr []int) {
 	if !test {
 		time.Sleep(time.Second / time.Duration(Fps))
 		fmt.Print("\033[2J")
+		fmt.Print(buffer.String())
+	} else {
+		fmt.Print(".")
 	}
-
-	fmt.Print(buffer.String())
 }
 
 func RandomArray(n int, max int) []int {
