@@ -189,6 +189,25 @@ func BubbleSort(arr []int, frameGen FrameGen) {
 	}
 }
 
+/* https://en.wikipedia.org/wiki/Cocktail_shaker_sort */
+func CocktailSort(arr []int, frameGen FrameGen) {
+	var i int
+	for !isSorted(arr) {
+		for i = 0; i < len(arr)-2; i++ {
+			if arr[i] > arr[i+1] {
+				arr[i], arr[i+1] = arr[i+1], arr[i]
+				frameGen(arr)
+			}
+		}
+		for ; i > 0; i-- {
+			if arr[i] > arr[i+1] {
+				arr[i], arr[i+1] = arr[i+1], arr[i]
+				frameGen(arr)
+			}
+		}
+	}
+}
+
 /* https://en.wikipedia.org/wiki/Comb_sort */
 func CombSort(arr []int, frameGen FrameGen) {
 	var gap int = len(arr)

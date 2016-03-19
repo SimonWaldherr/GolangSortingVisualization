@@ -28,7 +28,7 @@ func runSort(visName string, algo string, sortFunc gsv.Sorter) {
 func main() {
 	var algo string
 	var visName string
-	flag.StringVar(&algo, "algo", "bubble", "Select sorting algorithm all/bogo/[bubble]/comb/counting/gnome/insertion/oddEven/selection/sleep")
+	flag.StringVar(&algo, "algo", "bubble", "Select sorting algorithm all/bogo/[bubble]/cocktail/comb/counting/gnome/insertion/oddEven/selection/sleep")
 	flag.IntVar(&gsv.Fps, "fps", 10, "frames per second")
 	flag.IntVar(&gsv.Max, "max", 9, "highest value")
 	flag.IntVar(&gsv.Count, "count", 30, "number of values")
@@ -40,6 +40,7 @@ func main() {
 	sorterMap := map[string]gsv.Sorter{
 		//"bogo":    gsv.BogoSort,
 		"bubble":    gsv.BubbleSort,
+		"cocktail":  gsv.CocktailSort,
 		"comb":      gsv.CombSort,
 		"counting":  gsv.CountingSort,
 		"gnome":     gsv.GnomeSort,
