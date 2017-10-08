@@ -60,18 +60,16 @@ func runSort(visName string, arr []int, algo string, sortFunc Sorter) {
 
 func Test_GIF(t *testing.T) {
 	Max = 9
-	Count = 30
+	Count = 9
 	Mode = 2
-
-	arr := randomArray(Count, Max)
-
-	runSort("gif", arr, "selection", SelectionSort)
+	
+	runSort("gif", randomArray(Count, Max), "selection", SelectionSort)
 
 	Mode = 1
 
 	for k, v := range sorterMap {
 		t.Log(k)
-		runSort("gif", arr, k, v)
+		runSort("gif", randomArray(Count, Max), k, v)
 	}
 
 	t.Log("finish")
@@ -79,14 +77,12 @@ func Test_GIF(t *testing.T) {
 
 func Test_STDOUT(t *testing.T) {
 	Max = 9
-	Count = 30
+	Count = 9
 	Mode = 1
-
-	arr := randomArray(Count, Max)
 
 	for k, v := range sorterMap {
 		t.Log(k)
-		runSort("stdout", arr, k, v)
+		runSort("stdout", randomArray(Count, Max), k, v)
 	}
 
 	t.Log("finish")
