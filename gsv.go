@@ -2,7 +2,6 @@ package gsv
 
 import (
 	"bytes"
-	cryptoRand "crypto/rand"
 	"fmt"
 	"image"
 	"image/color"
@@ -131,20 +130,6 @@ func WriteStdout(arr []int) {
 	}
 }
 
-func RandomArray(n int, max int) []int {
-	var i int
-	var number float64
-	arr := make([]int, n)
-
-	for i = 0; i < n; i++ {
-		b := make([]byte, 1)
-		cryptoRand.Read(b)
-		number = float64(b[0])
-		arr[i] = int(number / 255 * float64(max))
-	}
-	return arr
-}
-
 func shuffle(arr []int) []int {
 	for i := len(arr) - 1; i > 0; i-- {
 		if j := rand.Intn(i + 1); i != j {
@@ -186,6 +171,25 @@ func BubbleSort(arr []int, frameGen FrameGen) {
 			}
 		}
 		frameGen(arr)
+	}
+}
+
+/* https://en.wikipedia.org/wiki/Cocktail_shaker_sort */
+func CocktailSort(arr []int, frameGen FrameGen) {
+	var i int
+	for !isSorted(arr) {
+		for i = 0; i < len(arr)-2; i++ {
+			if arr[i] > arr[i+1] {
+				arr[i], arr[i+1] = arr[i+1], arr[i]
+				frameGen(arr)
+			}
+		}
+		for ; i > 0; i-- {
+			if arr[i] > arr[i+1] {
+				arr[i], arr[i+1] = arr[i+1], arr[i]
+				frameGen(arr)
+			}
+		}
 	}
 }
 
