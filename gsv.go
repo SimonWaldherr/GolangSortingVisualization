@@ -138,8 +138,8 @@ func shuffle(arr []int) []int {
 }
 
 func isSorted(arr []int) bool {
-	for i := len(arr); i > 1; i-- {
-		if arr[i-1] < arr[i-2] {
+	for i := 0; i < len(arr)-1; i++ {
+		if arr[i] > arr[i+1] {
 			return false
 		}
 	}

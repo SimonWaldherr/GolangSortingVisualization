@@ -12,7 +12,7 @@ func init() {
 	test = true
 
 	sorterMap = map[string]Sorter{
-		//"bogo":      BogoSort,
+		"bogo":      BogoSort,
 		"bubble":    BubbleSort,
 		"cocktail":  CocktailSort,
 		"comb":      CombSort,
