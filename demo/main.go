@@ -1,11 +1,11 @@
 package main
 
 import (
+	cryptoRand "crypto/rand"
 	"flag"
 	"fmt"
 	gsv "simonwaldherr.de/go/GolangSortingVisualization"
 	"time"
-	cryptoRand "crypto/rand"
 )
 
 func randomArray(n int, max int) []int {

@@ -14,7 +14,7 @@ func init() {
 	sorterMap = map[string]Sorter{
 		//"bogo":      BogoSort,
 		"bubble":    BubbleSort,
-		//"cocktail":  CocktailSort,
+		"cocktail":  CocktailSort,
 		"comb":      CombSort,
 		"counting":  CountingSort,
 		"gnome":     GnomeSort,

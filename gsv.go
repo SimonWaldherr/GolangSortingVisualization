@@ -125,8 +125,6 @@ func WriteStdout(arr []int) {
 		time.Sleep(time.Second / time.Duration(Fps))
 		fmt.Print("\033[2J")
 		fmt.Print(buffer.String())
-	} else {
-		fmt.Print(".")
 	}
 }
 
@@ -152,6 +150,7 @@ func isSorted(arr []int) bool {
 
 /* https://en.wikipedia.org/wiki/Bogosort */
 func BogoSort(arr []int, frameGen FrameGen) {
+	frameGen(arr)
 	for isSorted(arr) == false {
 		arr = shuffle(arr)
 		frameGen(arr)
@@ -163,6 +162,7 @@ func BubbleSort(arr []int, frameGen FrameGen) {
 	var i int
 	var j int
 
+	frameGen(arr)
 	for i = 0; i < len(arr); i++ {
 		for j = 0; j < len(arr)-1; j++ {
 			if arr[j] > arr[j+1] {
@@ -177,6 +177,7 @@ func BubbleSort(arr []int, frameGen FrameGen) {
 /* https://en.wikipedia.org/wiki/Cocktail_shaker_sort */
 func CocktailSort(arr []int, frameGen FrameGen) {
 	var i int
+	frameGen(arr)
 	for !isSorted(arr) {
 		for i = 0; i < len(arr)-2; i++ {
 			if arr[i] > arr[i+1] {
@@ -199,6 +200,7 @@ func CombSort(arr []int, frameGen FrameGen) {
 	var swapped bool = false
 	var i int
 
+	frameGen(arr)
 	for gap > 1 || swapped == true {
 		swapped = false
 		if gap > 1 {
@@ -218,6 +220,8 @@ func CombSort(arr []int, frameGen FrameGen) {
 /* https://en.wikipedia.org/wiki/Counting_sort */
 func CountingSort(arr []int, frameGen FrameGen) {
 	count := make([]int, Max+1)
+
+	frameGen(arr)
 	for _, x := range arr {
 		count[x-0]++
 	}
@@ -235,6 +239,7 @@ func CountingSort(arr []int, frameGen FrameGen) {
 func GnomeSort(arr []int, frameGen FrameGen) {
 	var i int = 1
 
+	frameGen(arr)
 	for i < len(arr) {
 		if arr[i] >= arr[i-1] {
 			i++
@@ -253,6 +258,7 @@ func InsertionSort(arr []int, frameGen FrameGen) {
 	var i int
 	var j int
 
+	frameGen(arr)
 	for i = 0; i < len(arr); i++ {
 		j = i
 		for j > 0 && arr[j-1] > arr[j] {
@@ -269,6 +275,7 @@ func OddEvenSort(arr []int, frameGen FrameGen) {
 	var sorted bool = false
 	var i int
 
+	frameGen(arr)
 	for !sorted {
 		sorted = true
 		for i = 1; i < len(arr)-1; i += 2 {
@@ -295,6 +302,7 @@ func SelectionSort(arr []int, frameGen FrameGen) {
 	var i int
 	var j int
 
+	frameGen(arr)
 	for i = 0; i < len(arr); i++ {
 		min = i
 		for j = i + 1; j < len(arr); j++ {
@@ -335,6 +343,7 @@ func StoogeSort(arr []int, frameGen FrameGen) {
 
 func stoogesort(arr []int, i int, j int, frameGen FrameGen) []int {
 	var t int
+	frameGen(arr)
 	if arr[j] < arr[i] {
 		arr[i], arr[j] = arr[j], arr[i]
 	}
