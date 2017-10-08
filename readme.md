@@ -2,7 +2,8 @@
 
 [![Coverage Status](https://coveralls.io/repos/SimonWaldherr/GolangSortingVisualization/badge.png)](https://coveralls.io/r/SimonWaldherr/GolangSortingVisualization) 
 [![Build Status](https://travis-ci.org/SimonWaldherr/GolangSortingVisualization.svg?branch=master)](https://travis-ci.org/SimonWaldherr/GolangSortingVisualization) 
-[![Flattr donate button](https://raw.github.com/balupton/flattr-buttons/master/badge-89x18.gif)](https://flattr.com/submit/auto?user_id=SimonWaldherr&url=http%3A%2F%2Fgithub.com%2FSimonWaldherr%2FGolangSortingVisualization "Donate monthly to this project using Flattr")
+[![Go Report Card](https://goreportcard.com/badge/github.com/simonwaldherr/GolangSortingVisualization)](https://goreportcard.com/report/github.com/simonwaldherr/GolangSortingVisualization)
+[![codebeat badge](https://codebeat.co/badges/c175babc-9113-40ab-8802-1cdb4b14d250)](https://codebeat.co/projects/github-com-simonwaldherr-golangsortingvisualization-master)
 
 this sorting visualization is not intended to recommend any algorithm, if you need a recommendation go [somewhere else](https://en.wikipedia.org/wiki/Sorting_algorithm#Comparison_of_algorithms).
 
