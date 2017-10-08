@@ -2,7 +2,6 @@ package gsv
 
 import (
 	"bytes"
-	cryptoRand "crypto/rand"
 	"fmt"
 	"image"
 	"image/color"
@@ -129,20 +128,6 @@ func WriteStdout(arr []int) {
 	} else {
 		fmt.Print(".")
 	}
-}
-
-func RandomArray(n int, max int) []int {
-	var i int
-	var number float64
-	arr := make([]int, n)
-
-	for i = 0; i < n; i++ {
-		b := make([]byte, 1)
-		cryptoRand.Read(b)
-		number = float64(b[0])
-		arr[i] = int(number / 255 * float64(max))
-	}
-	return arr
 }
 
 func shuffle(arr []int) []int {

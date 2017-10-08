@@ -5,7 +5,22 @@ import (
 	"fmt"
 	gsv "github.com/SimonWaldherr/GolangSortingVisualization"
 	"time"
+	cryptoRand "crypto/rand"
 )
+
+func randomArray(n int, max int) []int {
+	var i int
+	var number float64
+	arr := make([]int, n)
+
+	for i = 0; i < n; i++ {
+		b := make([]byte, 1)
+		cryptoRand.Read(b)
+		number = float64(b[0])
+		arr[i] = int(number / 255 * float64(max))
+	}
+	return arr
+}
 
 func makeVisualizer(name string) gsv.Visualizer {
 	if name == "stdout" {
@@ -20,7 +35,7 @@ func makeVisualizer(name string) gsv.Visualizer {
 func runSort(visName string, algo string, sortFunc gsv.Sorter) {
 	visualizer := makeVisualizer(visName)
 	visualizer.Setup(algo)
-	arr := gsv.RandomArray(gsv.Count, gsv.Max)
+	arr := randomArray(gsv.Count, gsv.Max)
 	sortFunc(arr, visualizer.AddFrame)
 	visualizer.Complete()
 }
