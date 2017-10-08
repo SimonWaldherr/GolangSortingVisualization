@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	gsv "github.com/SimonWaldherr/GolangSortingVisualization"
+	gsv "simonwaldherr.de/go/GolangSortingVisualization"
 	"time"
 	cryptoRand "crypto/rand"
 )
