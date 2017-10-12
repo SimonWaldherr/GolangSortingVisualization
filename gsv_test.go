@@ -23,6 +23,7 @@ func init() {
 		"selection": SelectionSort,
 		"sleep":     SleepSort,
 		"stooge":    StoogeSort,
+		"merge":     MergeSort,
 	}
 }
 
@@ -62,7 +63,6 @@ func Test_GIF(t *testing.T) {
 	Max = 9
 	Count = 9
 	Mode = 2
-	
 	runSort("gif", randomArray(Count, Max), "selection", SelectionSort)
 
 	Mode = 1

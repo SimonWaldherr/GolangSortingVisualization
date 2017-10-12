@@ -64,6 +64,7 @@ func main() {
 		"selection": gsv.SelectionSort,
 		"sleep":     gsv.SleepSort,
 		"stooge":    gsv.StoogeSort,
+		"merge":     gsv.MergeSort,
 	}
 
 	fmt.Printf("sorting via %v-sort\nhighest value: %v\nnumber of values: %v\n\n", algo, gsv.Max, gsv.Count)
