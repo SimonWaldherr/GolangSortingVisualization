@@ -23,6 +23,7 @@ func init() {
 		"selection": SelectionSort,
 		"sleep":     SleepSort,
 		"stooge":    StoogeSort,
+		"quick":     QuickSort,
 	}
 }
 

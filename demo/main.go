@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/h4ckm03d/GolangSortingVisualization"
 	cryptoRand "crypto/rand"
 	"flag"
 	"fmt"
@@ -43,7 +44,7 @@ func runSort(visName string, algo string, sortFunc gsv.Sorter) {
 func main() {
 	var algo string
 	var visName string
-	flag.StringVar(&algo, "algo", "bubble", "Select sorting algorithm all/bogo/[bubble]/cocktail/comb/counting/gnome/insertion/oddEven/selection/sleep")
+	flag.StringVar(&algo, "algo", "bubble", "Select sorting algorithm all/bogo/[bubble]/cocktail/comb/counting/gnome/insertion/oddEven/selection/sleep/quick")
 	flag.IntVar(&gsv.Fps, "fps", 10, "frames per second")
 	flag.IntVar(&gsv.Max, "max", 9, "highest value")
 	flag.IntVar(&gsv.Count, "count", 30, "number of values")
@@ -64,6 +65,7 @@ func main() {
 		"selection": gsv.SelectionSort,
 		"sleep":     gsv.SleepSort,
 		"stooge":    gsv.StoogeSort,
+		"quick": 		 gsv.QuickSort,
 	}
 
 	fmt.Printf("sorting via %v-sort\nhighest value: %v\nnumber of values: %v\n\n", algo, gsv.Max, gsv.Count)
