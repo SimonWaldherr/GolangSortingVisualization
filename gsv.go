@@ -385,3 +385,45 @@ func quickSort(arr []int, l int, r int, frameGen FrameGen){
 	quickSort(arr, i, r, frameGen)
 	frameGen(arr)	
 }
+
+// MergeSort is an implementation of https://en.wikipedia.org/wiki/Merge_sort
+func MergeSort(arr []int, frameGen FrameGen) {
+	// initial frame
+	frameGen(arr)
+	mergesort(arr, frameGen)
+}
+
+func mergesort(arr []int, frameGen FrameGen) []int {
+	// base case
+	if len(arr) <= 1 {
+		return arr
+	}
+
+	// split the arr
+	n := len(arr) / 2
+	l, r := arr[:n], arr[n:]
+
+	// sort the left and right
+	l = mergesort(l, frameGen)
+	r = mergesort(r, frameGen)
+
+	return merge(l, r, frameGen)
+}
+
+func merge(l, r []int, frameGen FrameGen) []int {
+	result := make([]int, 0)
+	frameGen(result)
+
+	for len(l) > 0 && len(r) > 0 {
+		if l[0] <= r[0] {
+			result = append(result, l[0])
+			l = l[1:]
+		} else {
+			result = append(result, r[0])
+			r = r[1:]
+		}
+		frameGen(result)
+	}
+
+	return append(append(result, l...), r...)
+}
