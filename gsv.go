@@ -6,6 +6,7 @@ import (
 	"image"
 	"image/color"
 	"image/gif"
+	"math"
 	"math/rand"
 	"os"
 	"time"
@@ -426,4 +427,69 @@ func merge(l, r []int, frameGen FrameGen) []int {
 	}
 
 	return append(append(result, l...), r...)
+}
+
+// HeapSort https://en.wikipedia.org/wiki/Heapsort
+func HeapSort(arr []int, frameGen FrameGen) {
+	heapsort(arr, len(arr), frameGen)
+}
+
+func heapsort(arr []int, c int, frameGen FrameGen) {
+	heapify(arr, c, frameGen)
+
+	end := c - 1
+	for end > 0 {
+		// move the largest value (arr[0]) to the front of the sorted values
+		arr[end], arr[0] = arr[0], arr[end]
+
+		// reduce heap size by one
+		end--
+
+		siftDown(arr, 0, end, frameGen)
+	}
+}
+
+func parent(i int) int { return int(math.Floor((float64(i) - 1) / 2)) }
+func child(i int) int  { return 2*i + 1 }
+
+// heapify puts the elements of arr in heap order, in place
+func heapify(arr []int, c int, frameGen FrameGen) {
+	s := parent(c - 1)
+
+	for s >= 0 {
+		// sift down the node at index 'start' to the proper place
+		// such that all nodes below the start index are in heap order
+		siftDown(arr, s, c-1, frameGen)
+
+		// goto the next parent node
+		s--
+	}
+}
+
+// siftDown repairs the heap whose root element is at index 's',
+// assuming the heaps rooted at its children are valid
+func siftDown(arr []int, start, end int, frameGen FrameGen) {
+	root := start
+
+	for child(root) <= end {
+		child := child(root)
+		swap := root
+
+		if arr[swap] < arr[child] {
+			swap = child
+		}
+
+		if child+1 <= end && arr[swap] < arr[child+1] {
+			swap = child + 1
+		}
+
+		if swap == root {
+			return
+		}
+
+		arr[root], arr[swap] = arr[swap], arr[root]
+		root = swap
+
+		frameGen(arr)
+	}
 }
