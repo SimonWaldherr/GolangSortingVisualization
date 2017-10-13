@@ -23,6 +23,7 @@ func init() {
 		"selection": SelectionSort,
 		"sleep":     SleepSort,
 		"stooge":    StoogeSort,
+		"quick":     QuickSort,
 	}
 }
 
@@ -86,4 +87,26 @@ func Test_STDOUT(t *testing.T) {
 	}
 
 	t.Log("finish")
+}
+// go test -bench=.
+func Benchmark_bogo_sort(b *testing.B) { benchmarkSort("bogo", b)}
+func Benchmark_bubble_sort(b *testing.B) { benchmarkSort("bubble", b)}
+func Benchmark_cocktail_sort(b *testing.B) { benchmarkSort("cocktail", b)}
+func Benchmark_comb_sort(b *testing.B) { benchmarkSort("comb", b)}
+func Benchmark_counting_sort(b *testing.B) { benchmarkSort("counting", b)}
+func Benchmark_gnome_sort(b *testing.B) { benchmarkSort("gnome", b)}
+func Benchmark_insertion_sort(b *testing.B) { benchmarkSort("insertion", b)}
+func Benchmark_oddEven_sort(b *testing.B) { benchmarkSort("oddEven", b)}
+func Benchmark_sleep_sort(b *testing.B) { benchmarkSort("sleep", b)}
+func Benchmark_stooge_sort(b *testing.B) { benchmarkSort("stooge", b)}
+func Benchmark_quick_sort(b *testing.B) { benchmarkSort("quick", b)}
+
+func benchmarkSort(sort string, b *testing.B){
+	arr:=randomArray(Count, Max)
+	frameGen:=FrameGen(WriteStdout)
+	if sort, found := sorterMap[sort]; found {
+		for n := 0; n < b.N; n++ {
+			sort(arr, frameGen)
+		}	
+	} 
 }
