@@ -1,7 +1,6 @@
 package main
 
 import (
-	"github.com/h4ckm03d/GolangSortingVisualization"
 	cryptoRand "crypto/rand"
 	"flag"
 	"fmt"

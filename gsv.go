@@ -360,13 +360,13 @@ func stoogesort(arr []int, i int, j int, frameGen FrameGen) []int {
 
 // QuickSort https://en.wikipedia.org/wiki/Quicksort
 func QuickSort(arr []int, frameGen FrameGen) {
-	quickSort(arr,0, len(arr)-1, frameGen)
+	frameGen(arr)
+	quickSort(arr, 0, len(arr)-1, frameGen)
 }
 
-func quickSort(arr []int, l int, r int, frameGen FrameGen) {
-	frameGen(arr)
+func quickSort(arr []int, l int, r int, frameGen FrameGen){
 	if l >= r {
-			return
+			return 
 	}
 	
 	pivot := arr[l]
@@ -383,5 +383,5 @@ func quickSort(arr []int, l int, r int, frameGen FrameGen) {
 
 	quickSort(arr, l, i-2, frameGen)
 	quickSort(arr, i, r, frameGen)
-	frameGen(arr)
+	frameGen(arr)	
 }
