@@ -364,26 +364,26 @@ func QuickSort(arr []int, frameGen FrameGen) {
 	quickSort(arr, 0, len(arr)-1, frameGen)
 }
 
-func quickSort(arr []int, l int, r int, frameGen FrameGen){
+func quickSort(arr []int, l int, r int, frameGen FrameGen) {
 	if l >= r {
-			return 
+		return
 	}
-	
+
 	pivot := arr[l]
 	i := l + 1
 
 	for j := l; j <= r; j++ {
-			if pivot > arr[j] {
-					arr[i], arr[j] = arr[j], arr[i]
-					i++
-			}
+		if pivot > arr[j] {
+			arr[i], arr[j] = arr[j], arr[i]
+			i++
+		}
 	}
 
 	arr[l], arr[i-1] = arr[i-1], pivot
 
 	quickSort(arr, l, i-2, frameGen)
 	quickSort(arr, i, r, frameGen)
-	frameGen(arr)	
+	frameGen(arr)
 }
 
 // MergeSort is an implementation of https://en.wikipedia.org/wiki/Merge_sort
