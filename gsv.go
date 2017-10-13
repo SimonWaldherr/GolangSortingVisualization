@@ -428,7 +428,7 @@ func merge(l, r []int, frameGen FrameGen) []int {
 	return append(append(result, l...), r...)
 }
 
-/* https://en.wikipedia.org/wiki/Shellsort */
+// ShellSort is an implementation of https://en.wikipedia.org/wiki/Shellsort
 func ShellSort(arr []int, frameGen FrameGen) {
 	n := len(arr)
 
