@@ -102,6 +102,7 @@ func Benchmark_oddEven_sort(b *testing.B)   { benchmarkSort("oddEven", b) }
 func Benchmark_sleep_sort(b *testing.B)     { benchmarkSort("sleep", b) }
 func Benchmark_stooge_sort(b *testing.B)    { benchmarkSort("stooge", b) }
 func Benchmark_quick_sort(b *testing.B)     { benchmarkSort("quick", b) }
+func Benchmark_merge_sort(b *testing.B)     { benchmarkSort("merge", b) }
 
 func benchmarkSort(sort string, b *testing.B) {
 	arr := randomArray(Count, Max)
