@@ -6,7 +6,9 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/simonwaldherr/GolangSortingVisualization)](https://goreportcard.com/report/github.com/simonwaldherr/GolangSortingVisualization)
 [![codebeat badge](https://codebeat.co/badges/c175babc-9113-40ab-8802-1cdb4b14d250)](https://codebeat.co/projects/github-com-simonwaldherr-golangsortingvisualization-master)
 
-this sorting visualization is not intended to recommend any algorithm, if you need a recommendation go [somewhere else](https://en.wikipedia.org/wiki/Sorting_algorithm#Comparison_of_algorithms).
+this sorting visualization is not intended to recommend any algorithm, if you need a recommendation go [somewhere else](https://en.wikipedia.org/wiki/Sorting_algorithm#Comparison_of_algorithms).  
+
+if you like, feel free to add more Sorting Algorithm examples. Many thanks to all [contributors](https://github.com/SimonWaldherr/GolangSortingVisualization/graphs/contributors).
 
 ## Sorting Algorithms
 
