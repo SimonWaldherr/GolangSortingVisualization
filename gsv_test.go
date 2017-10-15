@@ -12,9 +12,9 @@ func init() {
 	test = true
 
 	sorterMap = map[string]Sorter{
-		//"bogo":      BogoSort,
+		"bogo":      BogoSort,
 		"bubble":    BubbleSort,
-		//"cocktail":  CocktailSort,
+		"cocktail":  CocktailSort,
 		"comb":      CombSort,
 		"counting":  CountingSort,
 		"gnome":     GnomeSort,
@@ -23,6 +23,10 @@ func init() {
 		"selection": SelectionSort,
 		"sleep":     SleepSort,
 		"stooge":    StoogeSort,
+		"quick":     QuickSort,
+		"merge":     MergeSort,
+		"shell":     ShellSort,
+		"heap":      HeapSort,
 	}
 }
 
@@ -60,18 +64,16 @@ func runSort(visName string, arr []int, algo string, sortFunc Sorter) {
 
 func Test_GIF(t *testing.T) {
 	Max = 9
-	Count = 30
+	Count = 9
 	Mode = 2
 
-	arr := randomArray(Count, Max)
-
-	runSort("gif", arr, "selection", SelectionSort)
+	runSort("gif", randomArray(Count, Max), "selection", SelectionSort)
 
 	Mode = 1
 
 	for k, v := range sorterMap {
 		t.Log(k)
-		runSort("gif", arr, k, v)
+		runSort("gif", randomArray(Count, Max), k, v)
 	}
 
 	t.Log("finish")
@@ -79,15 +81,44 @@ func Test_GIF(t *testing.T) {
 
 func Test_STDOUT(t *testing.T) {
 	Max = 9
-	Count = 30
+	Count = 9
 	Mode = 1
-
-	arr := randomArray(Count, Max)
 
 	for k, v := range sorterMap {
 		t.Log(k)
-		runSort("stdout", arr, k, v)
+		runSort("stdout", randomArray(Count, Max), k, v)
 	}
 
 	t.Log("finish")
+}
+
+// go test -bench=.
+func Benchmark_bogo_sort(b *testing.B)      { benchmarkSort("bogo", b) }
+func Benchmark_bubble_sort(b *testing.B)    { benchmarkSort("bubble", b) }
+func Benchmark_cocktail_sort(b *testing.B)  { benchmarkSort("cocktail", b) }
+func Benchmark_comb_sort(b *testing.B)      { benchmarkSort("comb", b) }
+func Benchmark_counting_sort(b *testing.B)  { benchmarkSort("counting", b) }
+func Benchmark_gnome_sort(b *testing.B)     { benchmarkSort("gnome", b) }
+func Benchmark_insertion_sort(b *testing.B) { benchmarkSort("insertion", b) }
+func Benchmark_oddEven_sort(b *testing.B)   { benchmarkSort("oddEven", b) }
+func Benchmark_selection_sort(b *testing.B) { benchmarkSort("selection", b) }
+func Benchmark_sleep_sort(b *testing.B)     { benchmarkSort("sleep", b) }
+func Benchmark_stooge_sort(b *testing.B)    { benchmarkSort("stooge", b) }
+func Benchmark_quick_sort(b *testing.B)     { benchmarkSort("quick", b) }
+func Benchmark_shell_sort(b *testing.B)     { benchmarkSort("shell", b) }
+func Benchmark_heap_sort(b *testing.B)      { benchmarkSort("heap", b) }
+func Benchmark_merge_sort(b *testing.B)     { benchmarkSort("merge", b) }
+
+// WriteNop is a writer for FrameGen that does nothing.
+// Ensures we only benchmark alogrithms.
+func WriteNop(_ []int) {}
+
+func benchmarkSort(sort string, b *testing.B) {
+	arr := randomArray(Count, Max)
+	frameGen := FrameGen(WriteNop)
+	if sort, found := sorterMap[sort]; found {
+		for n := 0; n < b.N; n++ {
+			sort(arr, frameGen)
+		}
+	}
 }

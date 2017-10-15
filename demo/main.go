@@ -1,11 +1,13 @@
 package main
 
 import (
+	gsv ".."
+	cryptoRand "crypto/rand"
 	"flag"
 	"fmt"
-	gsv "simonwaldherr.de/go/GolangSortingVisualization"
+	//gsv "simonwaldherr.de/go/GolangSortingVisualization"
+	"strings"
 	"time"
-	cryptoRand "crypto/rand"
 )
 
 func randomArray(n int, max int) []int {
@@ -40,17 +42,17 @@ func runSort(visName string, algo string, sortFunc gsv.Sorter) {
 	visualizer.Complete()
 }
 
+func keysString(m map[string]gsv.Sorter) string {
+	keys := make([]string, 0, len(m))
+	for k := range m {
+		keys = append(keys, k)
+	}
+	return strings.Join(keys, "/")
+}
+
 func main() {
 	var algo string
 	var visName string
-	flag.StringVar(&algo, "algo", "bubble", "Select sorting algorithm all/bogo/[bubble]/cocktail/comb/counting/gnome/insertion/oddEven/selection/sleep")
-	flag.IntVar(&gsv.Fps, "fps", 10, "frames per second")
-	flag.IntVar(&gsv.Max, "max", 9, "highest value")
-	flag.IntVar(&gsv.Count, "count", 30, "number of values")
-	flag.IntVar(&gsv.Mode, "mode", 1, "visualization mode")
-	flag.StringVar(&visName, "vis", "stdout", "Select output: [stdout]/gif")
-
-	flag.Parse()
 
 	sorterMap := map[string]gsv.Sorter{
 		//"bogo":    gsv.BogoSort,
@@ -64,7 +66,20 @@ func main() {
 		"selection": gsv.SelectionSort,
 		"sleep":     gsv.SleepSort,
 		"stooge":    gsv.StoogeSort,
+		"quick":     gsv.QuickSort,
+		"merge":     gsv.MergeSort,
+		"shell":     gsv.ShellSort,
+		"heap":      gsv.HeapSort,
 	}
+
+	flag.StringVar(&algo, "algo", "bubble", "Select sorting algorithm all/bogo/"+strings.Replace(keysString(sorterMap), "bubble", "[bubble]", 1))
+	flag.IntVar(&gsv.Fps, "fps", 10, "frames per second")
+	flag.IntVar(&gsv.Max, "max", 9, "highest value")
+	flag.IntVar(&gsv.Count, "count", 30, "number of values")
+	flag.IntVar(&gsv.Mode, "mode", 1, "visualization mode")
+	flag.StringVar(&visName, "vis", "stdout", "Select output: [stdout]/gif")
+
+	flag.Parse()
 
 	fmt.Printf("sorting via %v-sort\nhighest value: %v\nnumber of values: %v\n\n", algo, gsv.Max, gsv.Count)
 	time.Sleep(time.Second * 1)
