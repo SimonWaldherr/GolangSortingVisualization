@@ -150,10 +150,14 @@ func isSorted(arr []int) bool {
 
 /* https://en.wikipedia.org/wiki/Bogosort */
 func BogoSort(arr []int, frameGen FrameGen) {
-	frameGen(arr)
+	if frameGen != nil {
+		frameGen(arr)
+	}
 	for isSorted(arr) == false {
 		arr = shuffle(arr)
-		frameGen(arr)
+		if frameGen != nil {
+			frameGen(arr)
+		}
 	}
 }
 
@@ -162,33 +166,45 @@ func BubbleSort(arr []int, frameGen FrameGen) {
 	var i int
 	var j int
 
-	frameGen(arr)
+	if frameGen != nil {
+		frameGen(arr)
+	}
 	for i = 0; i < len(arr); i++ {
 		for j = 0; j < len(arr)-1; j++ {
 			if arr[j] > arr[j+1] {
 				arr[j], arr[j+1] = arr[j+1], arr[j]
 			}
+			if frameGen != nil {
+				frameGen(arr)
+			}
+		}
+		if frameGen != nil {
 			frameGen(arr)
 		}
-		frameGen(arr)
 	}
 }
 
 /* https://en.wikipedia.org/wiki/Cocktail_shaker_sort */
 func CocktailSort(arr []int, frameGen FrameGen) {
 	var i int
-	frameGen(arr)
+	if frameGen != nil {
+		frameGen(arr)
+	}
 	for !isSorted(arr) {
 		for i = 0; i < len(arr)-2; i++ {
 			if arr[i] > arr[i+1] {
 				arr[i], arr[i+1] = arr[i+1], arr[i]
-				frameGen(arr)
+				if frameGen != nil {
+					frameGen(arr)
+				}
 			}
 		}
 		for ; i > 0; i-- {
 			if arr[i] > arr[i+1] {
 				arr[i], arr[i+1] = arr[i+1], arr[i]
-				frameGen(arr)
+				if frameGen != nil {
+					frameGen(arr)
+				}
 			}
 		}
 	}
@@ -200,7 +216,9 @@ func CombSort(arr []int, frameGen FrameGen) {
 	var swapped bool = false
 	var i int
 
-	frameGen(arr)
+	if frameGen != nil {
+		frameGen(arr)
+	}
 	for gap > 1 || swapped == true {
 		swapped = false
 		if gap > 1 {
@@ -211,9 +229,13 @@ func CombSort(arr []int, frameGen FrameGen) {
 				arr[i], arr[i+gap] = arr[i+gap], arr[i]
 				swapped = true
 			}
+			if frameGen != nil {
+				frameGen(arr)
+			}
+		}
+		if frameGen != nil {
 			frameGen(arr)
 		}
-		frameGen(arr)
 	}
 }
 
@@ -221,7 +243,9 @@ func CombSort(arr []int, frameGen FrameGen) {
 func CountingSort(arr []int, frameGen FrameGen) {
 	count := make([]int, Max+1)
 
-	frameGen(arr)
+	if frameGen != nil {
+		frameGen(arr)
+	}
 	for _, x := range arr {
 		count[x-0]++
 	}
@@ -231,7 +255,9 @@ func CountingSort(arr []int, frameGen FrameGen) {
 			arr[z] = i
 			z++
 		}
-		frameGen(arr)
+		if frameGen != nil {
+			frameGen(arr)
+		}
 	}
 }
 
@@ -239,7 +265,9 @@ func CountingSort(arr []int, frameGen FrameGen) {
 func GnomeSort(arr []int, frameGen FrameGen) {
 	var i int = 1
 
-	frameGen(arr)
+	if frameGen != nil {
+		frameGen(arr)
+	}
 	for i < len(arr) {
 		if arr[i] >= arr[i-1] {
 			i++
@@ -249,7 +277,9 @@ func GnomeSort(arr []int, frameGen FrameGen) {
 				i--
 			}
 		}
-		frameGen(arr)
+		if frameGen != nil {
+			frameGen(arr)
+		}
 	}
 }
 
@@ -258,15 +288,21 @@ func InsertionSort(arr []int, frameGen FrameGen) {
 	var i int
 	var j int
 
-	frameGen(arr)
+	if frameGen != nil {
+		frameGen(arr)
+	}
 	for i = 0; i < len(arr); i++ {
 		j = i
 		for j > 0 && arr[j-1] > arr[j] {
 			arr[j], arr[j-1] = arr[j-1], arr[j]
 			j = j - 1
+			if frameGen != nil {
+				frameGen(arr)
+			}
+		}
+		if frameGen != nil {
 			frameGen(arr)
 		}
-		frameGen(arr)
 	}
 }
 
@@ -275,7 +311,9 @@ func OddEvenSort(arr []int, frameGen FrameGen) {
 	var sorted bool = false
 	var i int
 
-	frameGen(arr)
+	if frameGen != nil {
+		frameGen(arr)
+	}
 	for !sorted {
 		sorted = true
 		for i = 1; i < len(arr)-1; i += 2 {
@@ -283,16 +321,22 @@ func OddEvenSort(arr []int, frameGen FrameGen) {
 				arr[i], arr[i+1] = arr[i+1], arr[i]
 				sorted = false
 			}
-			frameGen(arr)
+			if frameGen != nil {
+				frameGen(arr)
+			}
 		}
 		for i = 0; i < len(arr)-1; i += 2 {
 			if arr[i] > arr[i+1] {
 				arr[i], arr[i+1] = arr[i+1], arr[i]
 				sorted = false
 			}
+			if frameGen != nil {
+				frameGen(arr)
+			}
+		}
+		if frameGen != nil {
 			frameGen(arr)
 		}
-		frameGen(arr)
 	}
 }
 
@@ -302,17 +346,23 @@ func SelectionSort(arr []int, frameGen FrameGen) {
 	var i int
 	var j int
 
-	frameGen(arr)
+	if frameGen != nil {
+		frameGen(arr)
+	}
 	for i = 0; i < len(arr); i++ {
 		min = i
 		for j = i + 1; j < len(arr); j++ {
 			if arr[j] < arr[min] {
 				min = j
-				frameGen(arr)
+				if frameGen != nil {
+					frameGen(arr)
+				}
 			}
 		}
 		arr[i], arr[min] = arr[min], arr[i]
-		frameGen(arr)
+		if frameGen != nil {
+			frameGen(arr)
+		}
 	}
 }
 
@@ -321,7 +371,9 @@ func SleepSort(arr []int, frameGen FrameGen) {
 	var j int
 	arr2 := make([]int, len(arr))
 	channel := make(chan int, 1)
-	frameGen(arr)
+	if frameGen != nil {
+		frameGen(arr)
+	}
 	for i := 0; i < len(arr); i++ {
 		go func(arr []int, i int) {
 			time.Sleep(time.Duration(arr[i]) * time.Second / 4)
@@ -332,7 +384,9 @@ func SleepSort(arr []int, frameGen FrameGen) {
 	for i := 0; i < len(arr); i++ {
 		arr2[j] = <-channel
 		j++
-		frameGen(arr2)
+		if frameGen != nil {
+			frameGen(arr2)
+		}
 	}
 }
 
@@ -343,7 +397,9 @@ func StoogeSort(arr []int, frameGen FrameGen) {
 
 func stoogesort(arr []int, i int, j int, frameGen FrameGen) []int {
 	var t int
-	frameGen(arr)
+	if frameGen != nil {
+		frameGen(arr)
+	}
 	if arr[j] < arr[i] {
 		arr[i], arr[j] = arr[j], arr[i]
 	}
@@ -352,7 +408,9 @@ func stoogesort(arr []int, i int, j int, frameGen FrameGen) []int {
 		arr = stoogesort(arr, i, j-t, frameGen)
 		arr = stoogesort(arr, i+t, j, frameGen)
 		arr = stoogesort(arr, i, j-t, frameGen)
-		frameGen(arr)
+		if frameGen != nil {
+			frameGen(arr)
+		}
 	}
 
 	return arr
@@ -360,7 +418,9 @@ func stoogesort(arr []int, i int, j int, frameGen FrameGen) []int {
 
 // QuickSort https://en.wikipedia.org/wiki/Quicksort
 func QuickSort(arr []int, frameGen FrameGen) {
-	frameGen(arr)
+	if frameGen != nil {
+		frameGen(arr)
+	}
 	quickSort(arr, 0, len(arr)-1, frameGen)
 }
 
@@ -383,13 +443,17 @@ func quickSort(arr []int, l int, r int, frameGen FrameGen) {
 
 	quickSort(arr, l, i-2, frameGen)
 	quickSort(arr, i, r, frameGen)
-	frameGen(arr)
+	if frameGen != nil {
+		frameGen(arr)
+	}
 }
 
 // MergeSort is an implementation of https://en.wikipedia.org/wiki/Merge_sort
 func MergeSort(arr []int, frameGen FrameGen) {
 	// initial frame
-	frameGen(arr)
+	if frameGen != nil {
+		frameGen(arr)
+	}
 	mergesort(arr, frameGen)
 }
 
@@ -412,7 +476,9 @@ func mergesort(arr []int, frameGen FrameGen) []int {
 
 func merge(l, r []int, frameGen FrameGen) []int {
 	result := make([]int, 0)
-	frameGen(result)
+	if frameGen != nil {
+		frameGen(result)
+	}
 
 	for len(l) > 0 && len(r) > 0 {
 		if l[0] <= r[0] {
@@ -422,7 +488,9 @@ func merge(l, r []int, frameGen FrameGen) []int {
 			result = append(result, r[0])
 			r = r[1:]
 		}
-		frameGen(result)
+		if frameGen != nil {
+			frameGen(result)
+		}
 	}
 
 	return append(append(result, l...), r...)

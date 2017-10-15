@@ -112,3 +112,43 @@ func benchmarkSort(sort string, b *testing.B) {
 		}
 	}
 }
+
+// cloneArray Clones an array so source and the result are no backed by the same slice
+func cloneArray(source []int) []int {
+	n := len(source)
+	destination := make([]int, n, n)
+	copy(source, destination)
+	return destination
+}
+
+// Checks that clone array creates a separate copy and not a slice backed by the same array
+func TestCloneArray(t *testing.T) {
+	s := []int{1, 2, 3, 4, 5}
+	d := cloneArray(s)
+
+	if &s == &d {
+		t.Error("Source and Destination address should not be equal")
+	}
+	for i := range s {
+		if d[i] != s[i] {
+			t.Errorf("Expected index [%d] to be the same", i)
+		}
+		if &d[i] == &s[i] {
+			t.Errorf("Expected address of index [%d] to be different", i)
+		}
+	}
+}
+
+// ConsistentBenchmark times the sort algorithms for the same array of random data
+// for each algorithm without the overhead of Frame generation.
+func BenchmarkConsistentArrayNoFramegen(b *testing.B) {
+	arr := randomArray(1000, 750)
+	for method, sortFn := range sorterMap {
+		b.Run(method, func(b *testing.B) {
+			for i := 0; i < b.N; i++ {
+				arrCopy := cloneArray(arr)
+				sortFn(arrCopy, nil)
+			}
+		})
+	}
+}

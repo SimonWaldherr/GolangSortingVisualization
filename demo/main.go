@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"time"
+
 	"github.com/SimonWaldherr/GolangSortingVisualization"
 )
 
