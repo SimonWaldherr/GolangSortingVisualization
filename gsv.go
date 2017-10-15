@@ -236,7 +236,7 @@ func CountingSort(arr []int, frameGen FrameGen) {
 	}
 }
 
-/* https://en.wikipedia.org/wiki/Cubesort */
+/* https://en.wikipedia.org/wiki/Cycle_sort */
 func CycleSort(arr []int, frameGen FrameGen) {
 	frameGen(arr)
 	for cycleStart, item := range arr {
