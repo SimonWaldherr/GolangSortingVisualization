@@ -36,13 +36,29 @@ if you like, feel free to add more Sorting Algorithm examples. Many thanks to al
 
 [![Gnome Sort Animation](https://simonwaldherr.github.io/GolangSortingVisualization/sort_gnome.gif)](https://en.wikipedia.org/wiki/Gnome_sort)
 
+### HeapSort
+
+[![Heap Sort Animation](https://simonwaldherr.github.io/GolangSortingVisualization/sort_heap.gif)](https://en.wikipedia.org/wiki/Heapsort)
+
 ### InsertionSort
 
 [![Insertion Sort Animation](https://simonwaldherr.github.io/GolangSortingVisualization/sort_insertion.gif)](https://en.wikipedia.org/wiki/Insertion_sort)
 
+### MergeSort
+
+[![Merge Sort Animation](https://simonwaldherr.github.io/GolangSortingVisualization/sort_merge.gif)](https://en.wikipedia.org/wiki/Merge_sort)
+
 ### OddEvenSort
 
 [![OddEven Sort Animation](https://simonwaldherr.github.io/GolangSortingVisualization/sort_oddEven.gif)](https://en.wikipedia.org/wiki/Odd–even_sort)
+
+### QuickSort
+
+[![Quick Sort Animation](https://simonwaldherr.github.io/GolangSortingVisualization/sort_quick.gif)](https://en.wikipedia.org/wiki/Quicksort)
+
+### ShellSort
+
+[![Shell Sort Animation](https://simonwaldherr.github.io/GolangSortingVisualization/sort_shell.gif)](https://en.wikipedia.org/wiki/Shellsort)
 
 ### SelectionSort
 

@@ -60,6 +60,7 @@ func main() {
 		"cocktail":  gsv.CocktailSort,
 		"comb":      gsv.CombSort,
 		"counting":  gsv.CountingSort,
+		"cycle":     gsv.CycleSort,
 		"gnome":     gsv.GnomeSort,
 		"insertion": gsv.InsertionSort,
 		"oddEven":   gsv.OddEvenSort,
