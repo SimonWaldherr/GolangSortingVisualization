@@ -4,6 +4,8 @@ import (
 	cryptoRand "crypto/rand"
 	"flag"
 	"fmt"
+	//gsv ".."
+	gsv "simonwaldherr.de/go/GolangSortingVisualization"
 	"time"
 )
 
