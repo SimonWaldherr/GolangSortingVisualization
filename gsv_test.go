@@ -17,6 +17,7 @@ func init() {
 		"cocktail":  CocktailSort,
 		"comb":      CombSort,
 		"counting":  CountingSort,
+		"cycle":     CycleSort,
 		"gnome":     GnomeSort,
 		"insertion": InsertionSort,
 		"oddEven":   OddEvenSort,
@@ -98,6 +99,7 @@ func Benchmark_bubble_sort(b *testing.B)    { benchmarkSort("bubble", b) }
 func Benchmark_cocktail_sort(b *testing.B)  { benchmarkSort("cocktail", b) }
 func Benchmark_comb_sort(b *testing.B)      { benchmarkSort("comb", b) }
 func Benchmark_counting_sort(b *testing.B)  { benchmarkSort("counting", b) }
+func Benchmark_cycle_sort(b *testing.B)     { benchmarkSort("cycle", b) }
 func Benchmark_gnome_sort(b *testing.B)     { benchmarkSort("gnome", b) }
 func Benchmark_insertion_sort(b *testing.B) { benchmarkSort("insertion", b) }
 func Benchmark_oddEven_sort(b *testing.B)   { benchmarkSort("oddEven", b) }

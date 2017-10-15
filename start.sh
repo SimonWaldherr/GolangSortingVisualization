@@ -4,7 +4,7 @@ echo "INSERT A FRAMERATE [30]"
 read -t 10 FPS
 
 echo "INPUT A NAME OF A SORTING ALGORITHM"
-echo "all/bogo/comb/counting/sleep/cocktail/gnome/oddEven/stooge/insertion/shell/heap/bubble/selection/quick/merge"
+echo "all/bogo/comb/counting/cycle/sleep/cocktail/gnome/oddEven/stooge/insertion/shell/heap/bubble/selection/quick/merge"
 read -t 30 ALGO
 
 echo "SELECT OUTPUT MODE [stdout]/gif"

@@ -236,6 +236,41 @@ func CountingSort(arr []int, frameGen FrameGen) {
 	}
 }
 
+/* https://en.wikipedia.org/wiki/Cycle_sort */
+func CycleSort(arr []int, frameGen FrameGen) {
+	frameGen(arr)
+	for cycleStart, item := range arr {
+		pos := cycleStart
+		for _, item2 := range arr[cycleStart+1 : len(arr)] {
+			if item2 < item {
+				pos++
+			}
+		}
+		if pos == cycleStart {
+			continue
+		}
+		for item == arr[pos] {
+			pos++
+		}
+		arr[pos], item = item, arr[pos]
+		frameGen(arr)
+
+		for pos != cycleStart {
+			pos = cycleStart
+			for _, item2 := range arr[cycleStart+1 : len(arr)] {
+				if item2 < item {
+					pos++
+				}
+			}
+			for item == arr[pos] {
+				pos++
+			}
+			arr[pos], item = item, arr[pos]
+			frameGen(arr)
+		}
+	}
+}
+
 /* https://en.wikipedia.org/wiki/Gnome_sort */
 func GnomeSort(arr []int, frameGen FrameGen) {
 	var i int = 1
