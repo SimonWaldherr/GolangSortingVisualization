@@ -106,6 +106,7 @@ func Benchmark_stooge_sort(b *testing.B)    { benchmarkSort("stooge", b) }
 func Benchmark_quick_sort(b *testing.B)     { benchmarkSort("quick", b) }
 func Benchmark_shell_sort(b *testing.B)     { benchmarkSort("shell", b) }
 func Benchmark_heap_sort(b *testing.B)      { benchmarkSort("heap", b) }
+func Benchmark_merge_sort(b *testing.B)     { benchmarkSort("merge", b) }
 
 // WriteNop is a writer for FrameGen that does nothing.
 // Ensures we only benchmark alogrithms.
