@@ -448,7 +448,6 @@ func mergesort(arr []int, frameGen FrameGen) []int {
 
 func merge(l, r []int, frameGen FrameGen) []int {
 	result := make([]int, 0)
-	frameGen(result)
 
 	for len(l) > 0 && len(r) > 0 {
 		if l[0] <= r[0] {
@@ -458,10 +457,11 @@ func merge(l, r []int, frameGen FrameGen) []int {
 			result = append(result, r[0])
 			r = r[1:]
 		}
-		frameGen(result)
 	}
 
-	return append(append(result, l...), r...)
+	result = append(append(result, l...), r...)
+	frameGen(result)
+	return result
 }
 
 // ShellSort is an implementation of https://en.wikipedia.org/wiki/Shellsort
