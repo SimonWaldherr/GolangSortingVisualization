@@ -4,8 +4,8 @@ import (
 	cryptoRand "crypto/rand"
 	"flag"
 	"fmt"
-	gsv "simonwaldherr.de/go/GolangSortingVisualization"
 	"time"
+	"github.com/SimonWaldherr/GolangSortingVisualization"
 )
 
 func randomArray(n int, max int) []int {
