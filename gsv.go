@@ -149,7 +149,7 @@ func isSorted(arr []int) bool {
 
 /* SORTING ALGORITHMS BEGIN HERE */
 
-// BogoSort implements https://en.wikipedia.org/wiki/Bogosort
+// BogoSort is an implementation of https://en.wikipedia.org/wiki/Bogosort 
 func BogoSort(arr []int, frameGen FrameGen) {
 	if frameGen != nil {
 		frameGen(arr)
@@ -162,7 +162,7 @@ func BogoSort(arr []int, frameGen FrameGen) {
 	}
 }
 
-// BubbleSort implements https://en.wikipedia.org/wiki/Bubble_sort
+// BubbleSort is an implementation of https://en.wikipedia.org/wiki/Bubble_sort 
 func BubbleSort(arr []int, frameGen FrameGen) {
 	var i int
 	var j int
@@ -185,7 +185,7 @@ func BubbleSort(arr []int, frameGen FrameGen) {
 	}
 }
 
-// CocktailSort implements https://en.wikipedia.org/wiki/Cocktail_shaker_sort
+// CocktailSort is an implementation of https://en.wikipedia.org/wiki/Cocktail_shaker_sort 
 func CocktailSort(arr []int, frameGen FrameGen) {
 	var i int
 	if frameGen != nil {
@@ -211,7 +211,7 @@ func CocktailSort(arr []int, frameGen FrameGen) {
 	}
 }
 
-// CombSort implements https://en.wikipedia.org/wiki/Comb_sort
+// CombSort is an implementation of https://en.wikipedia.org/wiki/Comb_sort 
 func CombSort(arr []int, frameGen FrameGen) {
 	var gap int = len(arr)
 	var swapped bool = false
@@ -240,7 +240,7 @@ func CombSort(arr []int, frameGen FrameGen) {
 	}
 }
 
-// CountingSort implements https://en.wikipedia.org/wiki/Counting_sort
+// CountingSort is an implementation of https://en.wikipedia.org/wiki/Counting_sort 
 func CountingSort(arr []int, frameGen FrameGen) {
 	count := make([]int, Max+1)
 
@@ -262,9 +262,11 @@ func CountingSort(arr []int, frameGen FrameGen) {
 	}
 }
 
-// CycleSort implements https://en.wikipedia.org/wiki/Cycle_sort
+// CycleSort is an implementation of https://en.wikipedia.org/wiki/Cycle_sort 
 func CycleSort(arr []int, frameGen FrameGen) {
-	frameGen(arr)
+	if frameGen != nil {
+		frameGen(arr)
+	}
 	for cycleStart, item := range arr {
 		pos := cycleStart
 		for _, item2 := range arr[cycleStart+1 : len(arr)] {
@@ -279,7 +281,9 @@ func CycleSort(arr []int, frameGen FrameGen) {
 			pos++
 		}
 		arr[pos], item = item, arr[pos]
-		frameGen(arr)
+		if frameGen != nil {
+			frameGen(arr)
+		}
 
 		for pos != cycleStart {
 			pos = cycleStart
@@ -292,12 +296,14 @@ func CycleSort(arr []int, frameGen FrameGen) {
 				pos++
 			}
 			arr[pos], item = item, arr[pos]
-			frameGen(arr)
+			if frameGen != nil {
+				frameGen(arr)
+			}
 		}
 	}
 }
 
-// GnomeSort implements https://en.wikipedia.org/wiki/Gnome_sort
+// GnomeSort is an implementation of https://en.wikipedia.org/wiki/Gnome_sort 
 func GnomeSort(arr []int, frameGen FrameGen) {
 	var i int = 1
 
@@ -319,7 +325,7 @@ func GnomeSort(arr []int, frameGen FrameGen) {
 	}
 }
 
-// InsertionSort implements https://en.wikipedia.org/wiki/Insertion_sort
+// InsertionSort is an implementation of https://en.wikipedia.org/wiki/Insertion_sort 
 func InsertionSort(arr []int, frameGen FrameGen) {
 	var i int
 	var j int
@@ -342,7 +348,7 @@ func InsertionSort(arr []int, frameGen FrameGen) {
 	}
 }
 
-// OddEvenSort implements https://en.wikipedia.org/wiki/Odd–even_sort
+// OddEvenSort is an implementation of https://en.wikipedia.org/wiki/Odd–even_sort 
 func OddEvenSort(arr []int, frameGen FrameGen) {
 	var sorted bool = false
 	var i int
@@ -376,7 +382,7 @@ func OddEvenSort(arr []int, frameGen FrameGen) {
 	}
 }
 
-// SelectionSort implements https://en.wikipedia.org/wiki/Selection_sort
+// SelectionSort is an implementation of https://en.wikipedia.org/wiki/Selection_sort 
 func SelectionSort(arr []int, frameGen FrameGen) {
 	var min int = 0
 	var i int
@@ -402,7 +408,7 @@ func SelectionSort(arr []int, frameGen FrameGen) {
 	}
 }
 
-// SleepSort implements the SleepSort Algorithm - NOT ON WIKIPEDIA
+// SleepSort is an implementation of the SleepSort Algorithm - NOT ON WIKIPEDIA 
 func SleepSort(arr []int, frameGen FrameGen) {
 	var j int
 	arr2 := make([]int, len(arr))
@@ -426,7 +432,7 @@ func SleepSort(arr []int, frameGen FrameGen) {
 	}
 }
 
-// StoogeSort implements https://en.wikipedia.org/wiki/Stooge_sort
+// StoogeSort is an implementation of https://en.wikipedia.org/wiki/Stooge_sort 
 func StoogeSort(arr []int, frameGen FrameGen) {
 	stoogesort(arr, 0, len(arr)-1, frameGen)
 }
@@ -452,7 +458,7 @@ func stoogesort(arr []int, i int, j int, frameGen FrameGen) []int {
 	return arr
 }
 
-// QuickSort implements https://en.wikipedia.org/wiki/Quicksort
+// QuickSort is an implementation of https://en.wikipedia.org/wiki/Quicksort
 func QuickSort(arr []int, frameGen FrameGen) {
 	if frameGen != nil {
 		frameGen(arr)
@@ -541,12 +547,16 @@ func ShellSort(arr []int, frameGen FrameGen) {
 		h = 3*h + 1
 	}
 
-	frameGen(arr)
+	if frameGen != nil {
+		frameGen(arr)
+	}
 	for h >= 1 {
 		for i := h; i < n; i++ {
 			for j := i; j >= h && arr[j] < arr[j-h]; j -= h {
 				arr[j], arr[j-h] = arr[j-h], arr[j]
-				frameGen(arr)
+				if frameGen != nil {
+					frameGen(arr)
+				}
 			}
 		}
 		h /= 3
@@ -614,6 +624,8 @@ func siftDown(arr []int, start, end int, frameGen FrameGen) {
 		arr[root], arr[swap] = arr[swap], arr[root]
 		root = swap
 
-		frameGen(arr)
+		if frameGen != nil {
+			frameGen(arr)
+		}
 	}
 }
