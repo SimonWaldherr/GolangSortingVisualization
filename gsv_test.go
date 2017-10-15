@@ -105,9 +105,13 @@ func Benchmark_stooge_sort(b *testing.B)    { benchmarkSort("stooge", b) }
 func Benchmark_quick_sort(b *testing.B)     { benchmarkSort("quick", b) }
 func Benchmark_shell_sort(b *testing.B)     { benchmarkSort("shell", b) }
 
+// WriteNop is a writer for FrameGen that does nothing.
+// Ensures we only benchmark alogrithms.
+func WriteNop(_ []int) {}
+
 func benchmarkSort(sort string, b *testing.B) {
 	arr := randomArray(Count, Max)
-	frameGen := FrameGen(WriteStdout)
+	frameGen := FrameGen(WriteNop)
 	if sort, found := sorterMap[sort]; found {
 		for n := 0; n < b.N; n++ {
 			sort(arr, frameGen)
