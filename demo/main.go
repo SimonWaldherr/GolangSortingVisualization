@@ -68,6 +68,7 @@ func main() {
 		"quick":     gsv.QuickSort,
 		"merge":     gsv.MergeSort,
 		"shell":     gsv.ShellSort,
+		"heap":      gsv.HeapSort,
 	}
 
 	fmt.Printf("sorting via %v-sort\nhighest value: %v\nnumber of values: %v\n\n", algo, gsv.Max, gsv.Count)

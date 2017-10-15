@@ -26,6 +26,7 @@ func init() {
 		"quick":     QuickSort,
 		"merge":     MergeSort,
 		"shell":     ShellSort,
+		"heap":      HeapSort,
 	}
 }
 
@@ -104,6 +105,7 @@ func Benchmark_sleep_sort(b *testing.B)     { benchmarkSort("sleep", b) }
 func Benchmark_stooge_sort(b *testing.B)    { benchmarkSort("stooge", b) }
 func Benchmark_quick_sort(b *testing.B)     { benchmarkSort("quick", b) }
 func Benchmark_shell_sort(b *testing.B)     { benchmarkSort("shell", b) }
+func Benchmark_heap_sort(b *testing.B)      { benchmarkSort("heap", b) }
 
 func benchmarkSort(sort string, b *testing.B) {
 	arr := randomArray(Count, Max)
