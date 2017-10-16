@@ -32,6 +32,10 @@ if you like, feel free to add more Sorting Algorithm examples. Many thanks to al
 
 [![Counting Sort Animation](https://simonwaldherr.github.io/GolangSortingVisualization/sort_counting.gif)](https://en.wikipedia.org/wiki/Counting_sort)
 
+### CycleSort
+
+[![Cycle Sort Animation](https://simonwaldherr.github.io/GolangSortingVisualization/sort_cycle.gif)](https://en.wikipedia.org/wiki/Cycle_sort)
+
 ### GnomeSort
 
 [![Gnome Sort Animation](https://simonwaldherr.github.io/GolangSortingVisualization/sort_gnome.gif)](https://en.wikipedia.org/wiki/Gnome_sort)
