@@ -67,6 +67,7 @@ func main() {
 		"selection": gsv.SelectionSort,
 		"sleep":     gsv.SleepSort,
 		"stooge":    gsv.StoogeSort,
+		"pancake":   gsv.PancakeSort,
 		"quick":     gsv.QuickSort,
 		"merge":     gsv.MergeSort,
 		"shell":     gsv.ShellSort,
