@@ -467,6 +467,32 @@ func stoogesort(arr []int, i int, j int, frameGen FrameGen) []int {
 	return arr
 }
 
+// PancakeSort is an implementation of https://en.wikipedia.org/wiki/Pancake_sorting
+func PancakeSort(arr []int, frameGen FrameGen) {
+	if frameGen != nil {
+		frameGen(arr)
+	}
+	for uns := len(arr) - 1; uns > 0; uns-- {
+		lx, lg := 0, arr[0]
+		for i := 1; i <= uns; i++ {
+			if arr[i] > lg {
+				lx, lg = i, arr[i]
+				frameGen(arr)
+			}
+		}
+		pancakeFlip(arr, lx, frameGen)
+		pancakeFlip(arr, uns, frameGen)
+	}
+	frameGen(arr)
+}
+
+func pancakeFlip(arr []int, r int, frameGen FrameGen) {
+	for l := 0; l < r; l, r = l+1, r-1 {
+		arr[l], arr[r] = arr[r], arr[l]
+		frameGen(arr)
+	}
+}
+
 // QuickSort is an implementation of https://en.wikipedia.org/wiki/Quicksort
 func QuickSort(arr []int, frameGen FrameGen) {
 	if frameGen != nil {

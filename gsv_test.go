@@ -24,6 +24,7 @@ func init() {
 		"selection": SelectionSort,
 		"sleep":     SleepSort,
 		"stooge":    StoogeSort,
+		"pancake":   PancakeSort,
 		"quick":     QuickSort,
 		"merge":     MergeSort,
 		"shell":     ShellSort,
@@ -106,6 +107,7 @@ func Benchmark_oddEven_sort(b *testing.B)   { benchmarkSort("oddEven", b) }
 func Benchmark_selection_sort(b *testing.B) { benchmarkSort("selection", b) }
 func Benchmark_sleep_sort(b *testing.B)     { benchmarkSort("sleep", b) }
 func Benchmark_stooge_sort(b *testing.B)    { benchmarkSort("stooge", b) }
+func Benchmark_pancake_sort(b *testing.B)   { benchmarkSort("pancake", b) }
 func Benchmark_quick_sort(b *testing.B)     { benchmarkSort("quick", b) }
 func Benchmark_shell_sort(b *testing.B)     { benchmarkSort("shell", b) }
 func Benchmark_heap_sort(b *testing.B)      { benchmarkSort("heap", b) }
