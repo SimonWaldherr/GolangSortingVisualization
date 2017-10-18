@@ -56,6 +56,10 @@ if you like, feel free to add more Sorting Algorithm examples. Many thanks to al
 
 [![OddEven Sort Animation](https://simonwaldherr.github.io/GolangSortingVisualization/sort_oddEven.gif)](https://en.wikipedia.org/wiki/Odd–even_sort)
 
+### PancakeSort
+
+[![Pancake Sort Animation](https://simonwaldherr.github.io/GolangSortingVisualization/sort_pancake.gif)](https://en.wikipedia.org/wiki/Pancake_sorting)
+
 ### QuickSort
 
 [![Quick Sort Animation](https://simonwaldherr.github.io/GolangSortingVisualization/sort_quick.gif)](https://en.wikipedia.org/wiki/Quicksort)
