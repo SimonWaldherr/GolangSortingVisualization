@@ -1,9 +1,6 @@
 # GolangSortingVisualization
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/17d6bbf515e9433d9ca995eae45aad16)](https://www.codacy.com/app/SimonWaldherr/GolangSortingVisualization?utm_source=github.com&utm_medium=referral&utm_content=SimonWaldherr/GolangSortingVisualization&utm_campaign=badger)
-[![Coverage Status](https://coveralls.io/repos/SimonWaldherr/GolangSortingVisualization/badge.png)](https://coveralls.io/r/SimonWaldherr/GolangSortingVisualization) 
-[![Build Status](https://travis-ci.org/SimonWaldherr/GolangSortingVisualization.svg?branch=master)](https://travis-ci.org/SimonWaldherr/GolangSortingVisualization) 
-[![Go Report Card](https://goreportcard.com/badge/github.com/simonwaldherr/GolangSortingVisualization)](https://goreportcard.com/report/github.com/simonwaldherr/GolangSortingVisualization)
+[![Go Report Card](https://goreportcard.com/badge/simonwaldherr.de/go/golangsortingvisualization)](https://goreportcard.com/report/simonwaldherr.de/go/golangsortingvisualization)
 [![codebeat badge](https://codebeat.co/badges/c175babc-9113-40ab-8802-1cdb4b14d250)](https://codebeat.co/projects/github-com-simonwaldherr-golangsortingvisualization-master)
 
 this sorting visualization is not intended to recommend any algorithm, if you need a recommendation go [somewhere else](https://en.wikipedia.org/wiki/Sorting_algorithm#Comparison_of_algorithms).  
