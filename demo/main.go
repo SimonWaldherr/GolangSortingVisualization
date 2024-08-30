@@ -1,7 +1,6 @@
 package main
 
 import (
-	//gsv ".."
 	cryptoRand "crypto/rand"
 	"flag"
 	"fmt"
@@ -11,31 +10,35 @@ import (
 )
 
 func randomArray(n int, max int) []int {
-	var i int
-	var number float64
 	arr := make([]int, n)
-
-	for i = 0; i < n; i++ {
+	for i := 0; i < n; i++ {
 		b := make([]byte, 1)
 		cryptoRand.Read(b)
-		number = float64(b[0])
+		number := float64(b[0])
 		arr[i] = int(number / 255 * float64(max))
 	}
 	return arr
 }
 
 func makeVisualizer(name string) gsv.Visualizer {
-	if name == "stdout" {
-		return gsv.FrameGen(gsv.WriteStdout)
-	}
-	if name == "gif" {
+	name = "gif"
+	switch name {
+	case "stdout":
+		//return &gsv.WriteStdout{}
+	case "gif":
 		return &gsv.GifVisualizer{}
+	default:
+		return nil
 	}
 	return nil
 }
 
 func runSort(visName string, algo string, sortFunc gsv.Sorter) {
 	visualizer := makeVisualizer(visName)
+	if visualizer == nil {
+		fmt.Println("Invalid visualizer name")
+		return
+	}
 	visualizer.Setup(algo)
 	arr := randomArray(gsv.Count, gsv.Max)
 	sortFunc(arr, visualizer.AddFrame)
@@ -55,7 +58,6 @@ func main() {
 	var visName string
 
 	sorterMap := map[string]gsv.Sorter{
-		//"bogo":    gsv.BogoSort,
 		"bubble":    gsv.BubbleSort,
 		"cocktail":  gsv.CocktailSort,
 		"comb":      gsv.CombSort,
@@ -72,9 +74,11 @@ func main() {
 		"merge":     gsv.MergeSort,
 		"shell":     gsv.ShellSort,
 		"heap":      gsv.HeapSort,
+		"radix":     gsv.RadixSort,
+		"bitonic":   gsv.BitonicSort,
 	}
 
-	flag.StringVar(&algo, "algo", "bubble", "Select sorting algorithm all/bogo/"+strings.Replace(keysString(sorterMap), "bubble", "[bubble]", 1))
+	flag.StringVar(&algo, "algo", "bubble", "Select sorting algorithm all/"+strings.Replace(keysString(sorterMap), "bubble", "[bubble]", 1))
 	flag.IntVar(&gsv.Fps, "fps", 10, "frames per second")
 	flag.IntVar(&gsv.Max, "max", 9, "highest value")
 	flag.IntVar(&gsv.Count, "count", 30, "number of values")
@@ -93,6 +97,8 @@ func main() {
 		sortFunc := sorterMap[algo]
 		if sortFunc != nil {
 			runSort(visName, algo, sortFunc)
+		} else {
+			fmt.Printf("Algorithm %v not found.\n", algo)
 		}
 	}
 }

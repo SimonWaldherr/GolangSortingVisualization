@@ -12,35 +12,49 @@ func init() {
 	test = true
 
 	sorterMap = map[string]Sorter{
-		"bogo":      BogoSort,
-		"bubble":    BubbleSort,
-		"cocktail":  CocktailSort,
-		"comb":      CombSort,
-		"counting":  CountingSort,
-		"cycle":     CycleSort,
-		"gnome":     GnomeSort,
-		"insertion": InsertionSort,
-		"oddEven":   OddEvenSort,
-		"selection": SelectionSort,
-		"sleep":     SleepSort,
-		"stooge":    StoogeSort,
-		"pancake":   PancakeSort,
-		"quick":     QuickSort,
-		"merge":     MergeSort,
-		"shell":     ShellSort,
-		"heap":      HeapSort,
+		"bogo":       BogoSort,
+		"bubble":     BubbleSort,
+		"cocktail":   CocktailSort,
+		"comb":       CombSort,
+		"counting":   CountingSort,
+		"cycle":      CycleSort,
+		"gnome":      GnomeSort,
+		"insertion":  InsertionSort,
+		"oddEven":    OddEvenSort,
+		"selection":  SelectionSort,
+		"sleep":      SleepSort,
+		"stooge":     StoogeSort,
+		"pancake":    PancakeSort,
+		"quick":      QuickSort,
+		"merge":      MergeSort,
+		"shell":      ShellSort,
+		"heap":       HeapSort,
+		"radix":      RadixSort,
+		"bitonic":    BitonicSort,
 	}
 }
 
-func randomArray(n int, max int) []int {
-	var i int
-	var number float64
-	arr := make([]int, n)
+// StdoutVisualizer implements the Visualizer interface for stdout output
+type StdoutVisualizer struct{}
 
-	for i = 0; i < n; i++ {
+func (sv *StdoutVisualizer) Setup(name string) {
+	// No setup required for stdout
+}
+
+func (sv *StdoutVisualizer) AddFrame(arr []int) {
+	WriteStdout(arr)
+}
+
+func (sv *StdoutVisualizer) Complete() {
+	// No completion step required for stdout
+}
+
+func randomArray(n int, max int) []int {
+	arr := make([]int, n)
+	for i := 0; i < n; i++ {
 		b := make([]byte, 1)
 		cryptoRand.Read(b)
-		number = float64(b[0])
+		number := float64(b[0])
 		arr[i] = int(number / 255 * float64(max))
 	}
 	return arr
@@ -51,7 +65,7 @@ func makeVisualizer(name string) Visualizer {
 		return &GifVisualizer{}
 	}
 	if name == "stdout" {
-		return FrameGen(WriteStdout)
+		return &StdoutVisualizer{}
 	}
 	return nil
 }
@@ -112,30 +126,31 @@ func Benchmark_quick_sort(b *testing.B)     { benchmarkSort("quick", b) }
 func Benchmark_shell_sort(b *testing.B)     { benchmarkSort("shell", b) }
 func Benchmark_heap_sort(b *testing.B)      { benchmarkSort("heap", b) }
 func Benchmark_merge_sort(b *testing.B)     { benchmarkSort("merge", b) }
+func Benchmark_radix_sort(b *testing.B)     { benchmarkSort("radix", b) }
+func Benchmark_bitonic_sort(b *testing.B)   { benchmarkSort("bitonic", b) }
 
 // WriteNop is a writer for FrameGen that does nothing.
-// Ensures we only benchmark alogrithms.
+// Ensures we only benchmark algorithms.
 func WriteNop(_ []int) {}
 
 func benchmarkSort(sort string, b *testing.B) {
 	arr := randomArray(Count, Max)
 	frameGen := FrameGen(WriteNop)
-	if sort, found := sorterMap[sort]; found {
+	if sortFunc, found := sorterMap[sort]; found {
 		for n := 0; n < b.N; n++ {
-			sort(arr, frameGen)
+			sortFunc(arr, frameGen)
 		}
 	}
 }
 
-// cloneArray Clones an array so source and the result are no backed by the same slice
+// cloneArray Clones an array so source and the result are not backed by the same slice.
 func cloneArray(source []int) []int {
-	n := len(source)
-	destination := make([]int, n, n)
-	copy(source, destination)
+	destination := make([]int, len(source))
+	copy(destination, source)
 	return destination
 }
 
-// Checks that clone array creates a separate copy and not a slice backed by the same array
+// TestCloneArray checks that cloneArray creates a separate copy and not a slice backed by the same array.
 func TestCloneArray(t *testing.T) {
 	s := []int{1, 2, 3, 4, 5}
 	d := cloneArray(s)
@@ -153,7 +168,7 @@ func TestCloneArray(t *testing.T) {
 	}
 }
 
-// ConsistentBenchmark times the sort algorithms for the same array of random data
+// BenchmarkConsistentArrayNoFramegen times the sort algorithms for the same array of random data
 // for each algorithm without the overhead of Frame generation.
 func BenchmarkConsistentArrayNoFramegen(b *testing.B) {
 	arr := randomArray(1000, 750)
